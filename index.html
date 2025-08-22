@@ -1,0 +1,489 @@
+<!doctype html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>金蚂蚁 Guandan Studio — 官方网站</title>
+    <meta name="description" content="掼蛋，也可以更聪明、更公平、更好玩。实时反作弊、智能匹配、俱乐部赛与多赛制天梯。" />
+    <!-- ✅ 使用构建后的本地 CSS，而不是 cdn.tailwindcss.com -->
+    <link rel="stylesheet" href="./dist/output.css" />
+    <!-- 可选：图标库（与 Tailwind 构建无关，可保留或去掉） -->
+    <script src="https://unpkg.com/lucide@latest" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/lucide@latest" defer
+        onload="window.lucide && window.lucide.createIcons()"></script>
+</head>
+
+<body class="min-h-screen bg-white text-slate-900 dark:bg-slate-950 dark:text-slate-100">
+    <!-- 顶部导航 -->
+    <header
+        class="sticky top-0 z-50 border-b bg-white/70 dark:bg-slate-950/50 backdrop-blur supports-[backdrop-filter]:bg-white/50">
+        <nav class="mx-auto max-w-6xl px-4">
+            <div class="flex h-16 items-center justify-between">
+                <a href="#home" class="flex items-center gap-2">
+                    <div class="h-8 w-8 rounded-xl bg-gradient-to-br from-emerald-400 to-blue-500"></div>
+                    <div>
+                        <div class="font-bold tracking-tight">金蚂蚁 Guandan Studio</div>
+                        <div class="text-xs text-slate-500 dark:text-slate-400">让每一局都有故事</div>
+                    </div>
+                    <span class="badge ml-2 hidden sm:inline-flex">Since 2025</span>
+                </a>
+                <div class="hidden md:flex items-center gap-6 text-sm">
+                    <a href="#features" class="hover:opacity-80">产品特色</a>
+                    <a href="#gameplay" class="hover:opacity-80">玩法亮点</a>
+                    <a href="#screens" class="hover:opacity-80">界面预览</a>
+                    <a href="#esports" class="hover:opacity-80">赛事合作</a>
+                    <a href="#about" class="hover:opacity-80">关于我们</a>
+                    <a href="#contact" class="hover:opacity-80">联系</a>
+                </div>
+                <div class="flex items-center gap-2">
+                    <a href="#download" class="btn btn-outline text-sm"><i data-lucide="download"
+                            class="w-4 h-4"></i>下载</a>
+                    <a href="#contact" class="btn btn-primary text-sm"><i data-lucide="mail"
+                            class="w-4 h-4"></i>商务合作</a>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Hero -->
+    <section id="home" class="relative overflow-hidden border-b">
+        <div class="mx-auto max-w-6xl px-4 py-16 md:py-28 relative">
+            <div class="grid md:grid-cols-2 gap-10 items-center">
+                <div>
+                    <span class="badge mb-4"><i data-lucide="gamepad-2" class="w-4 h-4"></i> 国民级掼蛋 · 新体验</span>
+                    <h1 class="text-3xl md:text-5xl font-bold leading-tight tracking-tight">
+                        掼蛋，也可以
+                        <span class="bg-gradient-to-r from-emerald-400 to-blue-500 bg-clip-text text-transparent">更聪明 ·
+                            更公平 · 更好玩</span>
+                    </h1>
+                    <p class="mt-4 text-slate-600 dark:text-slate-400 max-w-xl">我们用实时反作弊、智能匹配、好友组队与俱乐部赛，打造更纯粹的掼蛋竞技与社交体验。
+                    </p>
+                    <div class="mt-6 flex flex-wrap gap-3">
+                        <a href="#download" class="btn btn-primary text-base"><i data-lucide="download"
+                                class="w-5 h-5"></i> 立即下载</a>
+                        <a href="#video" class="btn btn-outline text-base"><i data-lucide="play-circle"
+                                class="w-5 h-5"></i> 观看演示</a>
+                    </div>
+                    <div class="mt-6 flex items-center gap-4 text-sm text-slate-500 dark:text-slate-400">
+                        <span class="inline-flex items-center gap-1"><i data-lucide="badge-check" class="w-4 h-4"></i>
+                            公平竞技</span>
+                        <span class="inline-flex items-center gap-1"><i data-lucide="shield-check" class="w-4 h-4"></i>
+                            实时反作弊</span>
+                        <span class="inline-flex items-center gap-1"><i data-lucide="users" class="w-4 h-4"></i>
+                            好友同桌</span>
+                    </div>
+                </div>
+                <div>
+                    <div class="rounded-3xl border bg-white/60 dark:bg-slate-900/50 p-3 shadow-card">
+                        <div
+                            class="aspect-[10/7] w-full rounded-2xl bg-gradient-to-br from-slate-800 to-slate-700 grid place-items-center">
+                            <div class="text-center p-6 text-white">
+                                <div class="text-6xl">🂡🂮</div>
+                                <p class="mt-4 text-slate-300">游戏实机画面预览位（替换为截图）</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 产品特色 -->
+    <section id="features" class="section">
+        <div class="mx-auto max-w-6xl px-4">
+            <div class="mb-10">
+                <h2 class="text-2xl md:text-4xl font-bold tracking-tight">产品特色</h2>
+                <p class="mt-2 text-slate-600 dark:text-slate-400 max-w-2xl">围绕公平性、连接性与观赏性打造的掼蛋平台</p>
+            </div>
+            <div class="grid md:grid-cols-3 gap-6">
+                <!-- <div class="card h-full">
+                    <div class="flex items-center gap-3 mb-2">
+                        <div class="rounded-2xl p-2 bg-slate-100 dark:bg-slate-800"><i data-lucide="shield-check"
+                                class="w-6 h-6"></i></div>
+                        <h3 class="text-lg font-semibold">实时风控&反作弊</h3>
+                    </div>
+                    <p class="text-slate-600 dark:text-slate-400">多维特征检测+设备指纹+异常出牌建模，第一时间识别并处理异常对局。</p>
+                </div> -->
+                <div class="card h-full">
+                    <div class="flex items-center gap-3 mb-2">
+                        <div class="rounded-2xl p-2 bg-slate-100 dark:bg-slate-800"><i data-lucide="users"
+                                class="w-6 h-6"></i></div>
+                        <h3 class="text-lg font-semibold">智能匹配&同城优先</h3>
+                    </div>
+                    <p class="text-slate-600 dark:text-slate-400">基于水平分与队友偏好匹配，低延迟开局，同城/好友优先。</p>
+                </div>
+                <!-- <div class="card h-full">
+                    <div class="flex items-center gap-3 mb-2">
+                        <div class="rounded-2xl p-2 bg-slate-100 dark:bg-slate-800"><i data-lucide="trophy"
+                                class="w-6 h-6"></i></div>
+                        <h3 class="text-lg font-semibold">多赛制官方赛事</h3>
+                    </div>
+                    <p class="text-slate-600 dark:text-slate-400">天梯、段位、周赛、邀请赛与城市冠军赛，人人皆可上榜。</p>
+                </div> -->
+                <div class="card h-full">
+                    <div class="flex items-center gap-3 mb-2">
+                        <div class="rounded-2xl p-2 bg-slate-100 dark:bg-slate-800"><i data-lucide="sparkles"
+                                class="w-6 h-6"></i></div>
+                        <h3 class="text-lg font-semibold">智能提示不代打</h3>
+                    </div>
+                    <p class="text-slate-600 dark:text-slate-400">出牌推荐仅作学习辅助，严格限制代打与托管边界。</p>
+                </div>
+                <!-- <div class="card h-full">
+                    <div class="flex items-center gap-3 mb-2">
+                        <div class="rounded-2xl p-2 bg-slate-100 dark:bg-slate-800"><i data-lucide="megaphone"
+                                class="w-6 h-6"></i></div>
+                        <h3 class="text-lg font-semibold">俱乐部与战队</h3>
+                    </div>
+                    <p class="text-slate-600 dark:text-slate-400">成立俱乐部、战队约战，排行榜与荣誉墙增强社区归属感。</p>
+                </div> -->
+                <div class="card h-full">
+                    <div class="flex items-center gap-3 mb-2">
+                        <div class="rounded-2xl p-2 bg-slate-100 dark:bg-slate-800"><i data-lucide="rocket"
+                                class="w-6 h-6"></i></div>
+                        <h3 class="text-lg font-semibold">低端机也流畅</h3>
+                    </div>
+                    <p class="text-slate-600 dark:text-slate-400">引擎级渲染优化与服务端合并消息，弱网/老机型也顺畅。</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 玩法亮点（Tabs） -->
+    <section id="gameplay" class="section">
+        <div class="mx-auto max-w-6xl px-4">
+            <div class="mb-10">
+                <h2 class="text-2xl md:text-4xl font-bold tracking-tight">玩法亮点</h2>
+                <p class="mt-2 text-slate-600 dark:text-slate-400 max-w-2xl">传承经典掼蛋规则，同时提供细化地区变体与自定义房间</p>
+            </div>
+            <div>
+                <div class="flex flex-wrap gap-2" role="tablist">
+                    <button class="btn btn-outline text-sm" data-tab-target="standard"
+                        aria-selected="true">标准掼蛋</button>
+                    <!-- <button class="btn btn-outline text-sm" data-tab-target="suqian">宿迁玩法</button>
+                    <button class="btn btn-outline text-sm" data-tab-target="huaian">淮安玩法</button> -->
+                    <button class="btn btn-outline text-sm" data-tab-target="custom">自定义房间</button>
+                </div>
+                <div class="mt-6">
+                    <div class="tab-panel" data-tab-content="standard">
+                        <div class="grid md:grid-cols-2 gap-6">
+                            <div class="card">
+                                <h3 class="text-lg font-semibold mb-1">核心规则</h3>
+                                <p class="text-slate-600 dark:text-slate-400">双升升级、同花顺/炸弹加分、连对/飞机等出牌类型完整支持。</p>
+                                <p class="text-slate-500 dark:text-slate-400 mt-2 text-sm">
+                                    支持叫主/定主、进贡还贡、升级段位等完整流程，提供可视化记分与回放。</p>
+                            </div>
+                            <div class="card">
+                                <h3 class="text-lg font-semibold mb-1">公平机制</h3>
+                                <p class="text-slate-600 dark:text-slate-400">超时、异常网络与托管边界明确，观战与语音均有风控策略。</p>
+                                <p class="text-slate-500 dark:text-slate-400 mt-2 text-sm">内置“诚信分”，严重违规将匹配至隔离池并限制排行。</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-panel hidden" data-tab-content="suqian">
+                        <div class="card">
+                            <h3 class="text-lg font-semibold mb-1">宿迁本地化</h3>
+                            <p class="text-slate-600 dark:text-slate-400">进贡规则、同花炸弹加权等可选开关，贴合当地习惯。</p>
+                        </div>
+                    </div>
+                    <div class="tab-panel hidden" data-tab-content="huaian">
+                        <div class="card">
+                            <h3 class="text-lg font-semibold mb-1">淮安本地化</h3>
+                            <p class="text-slate-600 dark:text-slate-400">对“拖拉机”定义、同分并升等细节优化。</p>
+                        </div>
+                    </div>
+                    <div class="tab-panel hidden" data-tab-content="custom">
+                        <div class="card">
+                            <h3 class="text-lg font-semibold mb-1">自定义房间</h3>
+                            <p class="text-slate-600 dark:text-slate-400">自由设置炸弹权重、让牌、记分上限、观战权限等。</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 界面预览 -->
+    <section id="screens" class="section">
+        <div class="mx-auto max-w-6xl px-4">
+            <div class="mb-10">
+                <h2 class="text-2xl md:text-4xl font-bold tracking-tight">界面预览</h2>
+                <p class="mt-2 text-slate-600 dark:text-slate-400 max-w-2xl">以下为占位图，发布前替换为真实截图</p>
+            </div>
+            <div class="grid md:grid-cols-3 gap-6">
+                <div class="rounded-2xl border p-3 bg-white/60 dark:bg-slate-900/50">
+                    <div
+                        class="aspect-[9/16] w-full rounded-xl bg-gradient-to-br from-slate-800 to-slate-700 grid place-items-center">
+                        <div class="text-center">
+                            <div class="text-5xl">📱</div>
+                            <p class="mt-2 text-sm text-slate-300">大厅 截图占位</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="rounded-2xl border p-3 bg-white/60 dark:bg-slate-900/50">
+                    <div
+                        class="aspect-[9/16] w-full rounded-xl bg-gradient-to-br from-slate-800 to-slate-700 grid place-items-center">
+                        <div class="text-center">
+                            <div class="text-5xl">📱</div>
+                            <p class="mt-2 text-sm text-slate-300">对局 截图占位</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="rounded-2xl border p-3 bg-white/60 dark:bg-slate-900/50">
+                    <div
+                        class="aspect-[9/16] w-full rounded-xl bg-gradient-to-br from-slate-800 to-slate-700 grid place-items-center">
+                        <div class="text-center">
+                            <div class="text-5xl">📱</div>
+                            <p class="mt-2 text-sm text-slate-300">结算 截图占位</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 赛事与合作 -->
+    <!-- <section id="esports" class="section">
+        <div class="mx-auto max-w-6xl px-4">
+            <div class="mb-10">
+                <h2 class="text-2xl md:text-4xl font-bold tracking-tight">赛事与合作</h2>
+                <p class="mt-2 text-slate-600 dark:text-slate-400 max-w-2xl">与媒体、线下俱乐部、商场与政府体育局共建城市级掼蛋赛事</p>
+            </div>
+            <div class="grid md:grid-cols-3 gap-6">
+                <div class="card h-full">
+                    <div class="flex items-center gap-3 mb-2">
+                        <div class="rounded-2xl p-2 bg-slate-100 dark:bg-slate-800"><i data-lucide="trophy"
+                                class="w-6 h-6"></i></div>
+                        <h3 class="text-lg font-semibold">官方天梯联赛</h3>
+                    </div>
+                    <p class="text-slate-600 dark:text-slate-400">季度制赛程+周末快闪赛，线上线下积分互通。</p>
+                </div>
+                <div class="card h-full">
+                    <div class="flex items-center gap-3 mb-2">
+                        <div class="rounded-2xl p-2 bg-slate-100 dark:bg-slate-800"><i data-lucide="handshake"
+                                class="w-6 h-6"></i></div>
+                        <h3 class="text-lg font-semibold">线下商圈联动</h3>
+                    </div>
+                    <p class="text-slate-600 dark:text-slate-400">购物中心积分赛、赞助导流小游戏位与品牌周边。</p>
+                </div>
+                <div class="card h-full">
+                    <div class="flex items-center gap-3 mb-2">
+                        <div class="rounded-2xl p-2 bg-slate-100 dark:bg-slate-800"><i data-lucide="building-2"
+                                class="w-6 h-6"></i></div>
+                        <h3 class="text-lg font-semibold">协会/俱乐部合作</h3>
+                    </div>
+                    <p class="text-slate-600 dark:text-slate-400">与本地棋牌协会、俱乐部共建裁判与培训体系。</p>
+                </div>
+            </div>
+
+            <div class="card mt-6">
+                <h3 class="text-xl font-semibold">成为合作伙伴</h3>
+                <p class="text-slate-500 dark:text-slate-400 mt-1">填写信息，我们将在 2 个工作日内联系你（静态站点可直接发邮件）。</p>
+                <div class="grid md:grid-cols-3 gap-4 mt-4">
+                    <input class="w-full rounded-xl border px-3 py-2 bg-white/70 dark:bg-slate-900/40"
+                        placeholder="公司/组织名称" />
+                    <input class="w-full rounded-xl border px-3 py-2 bg-white/70 dark:bg-slate-900/40"
+                        placeholder="联系人姓名" />
+                    <input class="w-full rounded-xl border px-3 py-2 bg-white/70 dark:bg-slate-900/40"
+                        placeholder="联系邮箱" type="email" />
+                </div>
+                <textarea class="w-full rounded-xl border px-3 py-2 bg-white/70 dark:bg-slate-900/40 mt-4" rows="4"
+                    placeholder="合作诉求与大致时间表"></textarea>
+                <div class="mt-4 flex gap-3">
+                    <a class="btn btn-primary" href="mailto:bd@guandan.studio?subject=合作对接&body=您好，我们想合作…"><i
+                            data-lucide="mail" class="w-4 h-4"></i> 邮件提交</a>
+                    <a class="btn btn-outline" href="#contact"><i data-lucide="phone-call" class="w-4 h-4"></i>
+                        其他联系方式</a>
+                </div>
+            </div>
+        </div>
+    </section> -->
+
+    <!-- 下载与平台 -->
+    <section id="download" class="section">
+        <div class="mx-auto max-w-6xl px-4">
+            <div class="mb-10">
+                <h2 class="text-2xl md:text-4xl font-bold tracking-tight">立即下载</h2>
+                <p class="mt-2 text-slate-600 dark:text-slate-400 max-w-2xl">覆盖 iOS / Android / Web，游客一键登录</p>
+            </div>
+            <div class="grid md:grid-cols-3 gap-6">
+                <div class="card">
+                    <div class="flex items-center gap-2 mb-1"><i data-lucide="store" class="w-5 h-5"></i>
+                        <h3 class="font-semibold">App Store</h3>
+                    </div>
+                    <p class="text-slate-600 dark:text-slate-400">适配 iPhone/iPad。</p>
+                    <a class="btn btn-outline w-full mt-4" href="#">即将上架</a>
+                </div>
+                <div class="card">
+                    <div class="flex items-center gap-2 mb-1"><i data-lucide="store" class="w-5 h-5"></i>
+                        <h3 class="font-semibold">Google Play</h3>
+                    </div>
+                    <p class="text-slate-600 dark:text-slate-400">支持安卓 6.0+，弱网优化与低端机适配。</p>
+                    <a class="btn btn-outline w-full mt-4" href="#">即将上架</a>
+                </div>
+                <div class="card">
+                    <div class="flex items-center gap-2 mb-1"><i data-lucide="globe" class="w-5 h-5"></i>
+                        <h3 class="font-semibold">Web 版</h3>
+                    </div>
+                    <p class="text-slate-600 dark:text-slate-400">无需下载，微信/浏览器直接开玩。</p>
+                    <a class="btn w-full mt-4" href="#">进入网页版</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 新闻与动态 -->
+    <!-- <section id="news" class="section">
+        <div class="mx-auto max-w-6xl px-4">
+            <div class="mb-10">
+                <h2 class="text-2xl md:text-4xl font-bold tracking-tight">新闻与动态</h2>
+                <p class="mt-2 text-slate-600 dark:text-slate-400 max-w-2xl">发布公告、版本更新与赛事信息</p>
+            </div>
+            <div class="grid md:grid-cols-3 gap-6">
+                <div class="card">
+                    <span class="badge">2025-08-01</span>
+                    <h3 class="text-lg font-semibold mt-2">v1.0 公测开启</h3>
+                    <p class="text-slate-600 dark:text-slate-400">开放宿迁/淮安等地区规则，欢迎反馈。</p>
+                    <a class="btn btn-outline mt-4 inline-flex" href="#">查看详情</a>
+                </div>
+                <div class="card">
+                    <span class="badge">2025-07-20</span>
+                    <h3 class="text-lg font-semibold mt-2">城市积分赛报名</h3>
+                    <p class="text-slate-600 dark:text-slate-400">首期合作商圈火热招募。</p>
+                    <a class="btn btn-outline mt-4 inline-flex" href="#">查看详情</a>
+                </div>
+                <div class="card">
+                    <span class="badge">2025-07-01</span>
+                    <h3 class="text-lg font-semibold mt-2">反作弊升级</h3>
+                    <p class="text-slate-600 dark:text-slate-400">上线设备指纹与异常出牌建模。</p>
+                    <a class="btn btn-outline mt-4 inline-flex" href="#">查看详情</a>
+                </div>
+            </div>
+        </div>
+    </section> -->
+
+    <!-- 关于我们 -->
+    <section id="about" class="section">
+        <div class="mx-auto max-w-6xl px-4">
+            <div class="mb-10">
+                <h2 class="text-2xl md:text-4xl font-bold tracking-tight">关于金蚂蚁</h2>
+                <p class="mt-2 text-slate-600 dark:text-slate-400 max-w-2xl">专注将传统纸牌数字化、年轻化、赛事化</p>
+            </div>
+            <div class="grid md:grid-cols-2 gap-6">
+                <div class="card">
+                    <h3 class="text-lg font-semibold">使命与愿景</h3>
+                    <p class="text-slate-600 dark:text-slate-400 mt-2">让身边的人随时能“凑一桌”，让掼蛋成为城市社交名片。</p>
+                    <p class="text-slate-500 dark:text-slate-400 mt-2 text-sm">
+                        我们来自游戏、风控与数据行业，核心成员历任国内头部棋牌/休闲工作室。坚持合规与长期主义，反对赌博化与过度商业化。</p>
+                </div>
+                <div class="card">
+                    <h3 class="text-lg font-semibold">合规与未成年保护</h3>
+                    <p class="text-slate-600 dark:text-slate-400 mt-2">实名、限时、适龄提示与内容分级全覆盖。</p>
+                    <p class="text-slate-500 dark:text-slate-400 mt-2 text-sm">严格遵循国家相关法律法规，杜绝任何形式的真钱交易与违规导流。</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 联系方式 -->
+    <section id="contact" class="section">
+        <div class="mx-auto max-w-6xl px-4">
+            <div class="mb-10">
+                <h2 class="text-2xl md:text-4xl font-bold tracking-tight">联系我们</h2>
+                <p class="mt-2 text-slate-600 dark:text-slate-400 max-w-2xl">欢迎媒体、渠道、俱乐部与品牌合作</p>
+            </div>
+            <div class="grid md:grid-cols-3 gap-6">
+                <div class="card">
+                    <h3 class="font-semibold">商务合作</h3>
+                    <p class="text-slate-600 dark:text-slate-400">品牌联动、赛事赞助、线下活动。</p>
+                    <a class="btn w-full mt-3" href="mailto:bd@guandan.studio?subject=商务合作">bd@guandan.studio</a>
+                </div>
+                <!-- <div class="card">
+                    <h3 class="font-semibold">媒体联系</h3>
+                    <p class="text-slate-600 dark:text-slate-400">新闻通稿、采访与素材包。</p>
+                    <a class="btn btn-outline w-full mt-3"
+                        href="mailto:press@guandan.studio?subject=媒体合作">press@guandan.studio</a>
+                </div> -->
+                <div class="card">
+                    <h3 class="font-semibold">玩家支持</h3>
+                    <p class="text-slate-600 dark:text-slate-400">BUG/建议反馈与账号申诉。</p>
+                    <a class="btn btn-outline w-full mt-3"
+                        href="mailto:support@guandan.studio?subject=玩家支持">support@guandan.studio</a>
+                </div>
+            </div>
+
+            <div class="mt-6 space-y-3">
+                <details class="card">
+                    <summary class="cursor-pointer font-medium">这是不是棋牌游戏，是否含有现金玩法？</summary>
+                    <p class="text-slate-600 dark:text-slate-400 mt-2">我们是纯休闲竞技产品，不含任何现金玩法，不支持线下红包/转账等导流。</p>
+                </details>
+                <!-- <details class="card">
+                    <summary class="cursor-pointer font-medium">如何申请举办线下赛？</summary>
+                    <p class="text-slate-600 dark:text-slate-400 mt-2">请邮件联系 bd@guandan.studio，说明场地、人数、时间与物料需求，我们会在 2
+                        个工作日内回复。</p>
+                </details> -->
+            </div>
+        </div>
+    </section>
+
+    <!-- 页脚 -->
+    <footer class="border-t">
+        <div class="mx-auto max-w-6xl px-4 py-10 grid md:grid-cols-4 gap-6 text-sm">
+            <div>
+                <div class="flex items-center gap-2">
+                    <div class="h-8 w-8 rounded-xl bg-gradient-to-br from-emerald-400 to-blue-500"></div>
+                    <div class="font-bold">金蚂蚁</div>
+                </div>
+                <p class="mt-3 text-slate-600 dark:text-slate-400">© <span id="year"></span> Guandan Studio. All rights
+                    reserved.</p>
+            </div>
+            <div>
+                <div class="font-semibold mb-2">产品</div>
+                <ul class="space-y-2 text-slate-600 dark:text-slate-400">
+                    <li><a href="#features" class="hover:underline">特色</a></li>
+                    <li><a href="#gameplay" class="hover:underline">玩法</a></li>
+                    <li><a href="#screens" class="hover:underline">截图</a></li>
+                </ul>
+            </div>
+            <div>
+                <div class="font-semibold mb-2">公司</div>
+                <ul class="space-y-2 text-slate-600 dark:text-slate-400">
+                    <li><a href="#about" class="hover:underline">关于</a></li>
+                    <li><a href="#news" class="hover:underline">新闻</a></li>
+                    <li><a href="#contact" class="hover:underline">联系</a></li>
+                </ul>
+            </div>
+            <div>
+                <div class="font-semibold mb-2">合规</div>
+                <ul class="space-y-2 text-slate-600 dark:text-slate-400">
+                    <li><a href="#" class="hover:underline">隐私政策（占位）</a></li>
+                    <li><a href="#" class="hover:underline">用户协议（占位）</a></li>
+                    <li><a href="#" class="hover:underline">家长监护（占位）</a></li>
+                </ul>
+            </div>
+        </div>
+    </footer>
+
+    <!-- 脚本：图标、Tab 切换、年份 -->
+    <script>
+        // lucide 渲染
+        if (window.lucide) { window.lucide.createIcons(); }
+
+        // 当前年份
+        document.getElementById('year').textContent = new Date().getFullYear();
+
+        // Tabs
+        const tabButtons = document.querySelectorAll('[data-tab-target]');
+        const tabPanels = document.querySelectorAll('[data-tab-content]');
+        tabButtons.forEach(btn => {
+            btn.addEventListener('click', () => {
+                const tgt = btn.getAttribute('data-tab-target');
+                tabButtons.forEach(b => b.setAttribute('aria-selected', 'false'));
+                btn.setAttribute('aria-selected', 'true');
+                tabPanels.forEach(p => p.classList.toggle('hidden', p.getAttribute('data-tab-content') !== tgt));
+            });
+        });
+    </script>
+</body>
+
+</html>

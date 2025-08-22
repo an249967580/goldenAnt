@@ -1,0 +1,13 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+/* 站点常用原子组合（可选）：*/
+.btn { @apply inline-flex items-center justify-center gap-2 rounded-lg px-4 py-2 font-medium border; }
+.btn-primary { @apply bg-emerald-500 text-white border-emerald-500 hover:bg-emerald-600; }
+.btn-outline { @apply bg-transparent text-slate-900 dark:text-slate-100 border-slate-300 dark:border-slate-700 hover:bg-slate-50/40 dark:hover:bg-white/5; }
+.badge { @apply inline-flex items-center gap-1 rounded-full border px-2.5 py-1 text-xs; }
+.card { @apply rounded-2xl border bg-white/70 dark:bg-slate-900/50 backdrop-blur p-6 shadow-card; }
+.muted { @apply text-slate-600 dark:text-slate-400; }
+.section { @apply scroll-mt-24 py-16 md:py-24; }
