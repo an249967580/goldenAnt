@@ -1,0 +1,170 @@
+<!doctype html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>邮箱验证码登录 · 掼蛋科技</title>
+    <meta name="description" content="使用邮箱验证码快速登录掼蛋科技账户。" />
+    <link rel="stylesheet" href="./dist/output.css" />
+    <!-- Lucide 图标库（UMD 包） -->
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+</head>
+
+<body
+    class="min-h-screen bg-gradient-to-br from-slate-50 to-white text-slate-900 dark:from-slate-950 dark:to-slate-900 dark:text-slate-100">
+    <header class="border-b bg-white/70 dark:bg-slate-950/50 backdrop-blur">
+        <nav class="mx-auto max-w-6xl px-4">
+            <div class="flex h-16 items-center justify-between">
+                <a href="/index.html" class="flex items-center gap-2">
+                    <div class="h-8 w-8 rounded-xl bg-gradient-to-br from-emerald-400 to-blue-500"></div>
+                    <div class="font-bold tracking-tight">掼蛋科技 Guandan Studio</div>
+                </a>
+                <a href="/index.html" class="btn btn-outline text-sm"><i data-lucide="home" class="w-4 h-4"></i>
+                    返回首页</a>
+            </div>
+        </nav>
+    </header>
+
+    <main class="mx-auto max-w-6xl px-4 py-10 grid lg:grid-cols-2 gap-10 items-center">
+        <!-- 左侧品牌/卖点 -->
+        <section class="hidden lg:block">
+            <div class="rounded-3xl border p-8 bg-white/60 dark:bg-slate-900/40">
+                <div
+                    class="inline-flex items-center gap-2 border rounded-full px-3 py-1 text-sm text-slate-600 dark:text-slate-300">
+                    <i data-lucide="shield-check" class="w-4 h-4"></i> 公平竞技 · 实时反作弊
+                </div>
+                <h1 class="mt-4 text-3xl font-bold leading-tight">邮箱验证码登录，
+                    <span
+                        class="bg-gradient-to-r from-emerald-400 to-blue-500 bg-clip-text text-transparent">更快捷更安全</span>
+                </h1>
+                <ul class="mt-6 space-y-3 text-slate-600 dark:text-slate-300">
+                    <li class="flex items-start gap-2"><span class="mt-1">✅</span> 无需记密码，输入验证码即登录</li>
+                    <li class="flex items-start gap-2"><span class="mt-1">✅</span> 云端同步战绩与称号</li>
+                    <li class="flex items-start gap-2"><span class="mt-1">✅</span> 赛事报名与回放</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- 登录卡片（邮箱 + 验证码） -->
+        <section>
+            <div
+                class="mx-auto max-w-md rounded-3xl border bg-white/80 dark:bg-slate-900/60 backdrop-blur p-8 shadow-card">
+                <div class="flex items-center gap-2 mb-4">
+                    <div class="h-8 w-8 rounded-xl bg-gradient-to-br from-emerald-400 to-blue-500"></div>
+                    <h2 class="text-xl font-semibold">邮箱验证码登录</h2>
+                </div>
+
+                <!-- 邀请码提示 -->
+                <div id="invite-box"
+                    class="hidden mb-4 p-3 rounded-xl bg-emerald-50 border border-emerald-200 text-emerald-700 text-sm">
+                </div>
+
+                <form id="form-otp" class="space-y-4">
+                    <div>
+                        <label class="block text-sm mb-1">邮箱</label>
+                        <input type="email" name="email" placeholder="name@example.com"
+                            class="w-full rounded-xl border px-3 py-2" required>
+                    </div>
+                    <div class="flex gap-2">
+                        <input type="text" name="code" placeholder="6 位验证码" class="flex-1 rounded-xl border px-3 py-2"
+                            required pattern="^\d{6}$">
+                        <button type="button" id="send-code" class="btn btn-outline"><i data-lucide="send"
+                                class="w-4 h-4"></i> 获取验证码</button>
+                    </div>
+                    <div class="text-sm">
+                        <label class="inline-flex items-start gap-2">
+                            <input type="checkbox" id="agree" class="mt-1 rounded" required>
+                            <span>我已阅读并同意 <a href="#" class="underline">用户协议</a> 与 <a href="#"
+                                    class="underline">隐私政策</a></span>
+                        </label>
+                    </div>
+                    <button class="btn btn-primary w-full" type="submit"><i data-lucide="log-in" class="w-4 h-4"></i>
+                        验证并登录</button>
+                </form>
+            </div>
+        </section>
+    </main>
+
+    <footer class="border-t">
+        <div class="mx-auto max-w-6xl px-4 py-8 text-sm text-slate-500">© <span id="year"></span> Guandan Studio</div>
+    </footer>
+
+    <script>
+        // 渲染图标
+        lucide.createIcons();
+        // 年份
+        document.getElementById('year').textContent = new Date().getFullYear();
+
+        // 显示邀请码
+        const params = new URLSearchParams(window.location.search);
+        const inviteId = params.get('inviteId');
+        if (inviteId) {
+            const box = document.getElementById('invite-box');
+            box.textContent = `邀请码：${inviteId}`;
+            box.classList.remove('hidden');
+        }
+
+        // 获取元素
+        const form = document.getElementById('form-otp');
+        const btnSend = document.getElementById('send-code');
+
+        // 发送验证码（演示：仅前端倒计时）
+        let cd = 0, timer;
+        btnSend.addEventListener('click', async () => {
+            if (cd > 0) return;
+            const email = form.elements['email'].value.trim();
+            const emailReg = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailReg.test(email)) { alert('请先填写正确的邮箱地址'); return; }
+
+            // TODO: 调用后端发送验证码接口
+
+            try {
+                const res = await fetch('http://18.167.55.115/api/Login/sendCode', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ account: email, type: 2 })
+                });
+                const data = await res.json();
+                // if (!res.ok || data.code !== 0) {   // 假设后端返回 {code:0,msg:'ok'} 表示成功
+                //     alert(data.msg || '发送失败');
+                //     return;
+                // }
+
+                // 启动倒计时
+                cd = 60;
+                btnSend.disabled = true;
+                btnSend.textContent = `已发送(60s)`;
+                timer = setInterval(() => {
+                    cd--; btnSend.textContent = `已发送(${cd}s)`;
+                    if (cd <= 0) {
+                        clearInterval(timer);
+                        btnSend.disabled = false;
+                        btnSend.innerHTML = '<i data-lucide="send" class="w-4 h-4"></i> 重新获取';
+                        lucide.createIcons();
+                    }
+                }, 1000);
+            } catch (err) {
+                alert('网络错误，请稍后重试');
+            }
+        });
+
+        // 提交验证码
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const email = form.elements['email'].value.trim();
+            const code = form.elements['code'].value.trim();
+            const agree = document.getElementById('agree').checked;
+            if (!/^\d{6}$/.test(code)) { alert('请输入 6 位验证码'); return; }
+            if (!agree) { alert('请先勾选同意条款'); return; }
+
+            // TODO: 调用后端验证码校验/登录接口
+
+            localStorage.setItem('demo_login', '1');
+            alert('登录成功！');
+            window.location.href = '/index.html';
+        });
+    </script>
+</body>
+
+</html>
