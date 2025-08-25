@@ -4,14 +4,16 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>金蚂蚁 Guandan Studio — 官方网站</title>
+    <title>金蚂蚁 — 官方网站</title>
     <meta name="description" content="掼蛋，也可以更聪明、更公平、更好玩。实时反作弊、智能匹配、俱乐部赛与多赛制天梯。" />
     <!-- ✅ 使用构建后的本地 CSS，而不是 cdn.tailwindcss.com -->
     <link rel="stylesheet" href="./dist/output.css" />
     <!-- 可选：图标库（与 Tailwind 构建无关，可保留或去掉） -->
-    <script src="https://unpkg.com/lucide@latest" defer></script>
+    <!-- Lucide 图标库（UMD 包） -->
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+    <!-- <script src="https://unpkg.com/lucide@latest" defer></script>
     <script src="https://cdn.jsdelivr.net/npm/lucide@latest" defer
-        onload="window.lucide && window.lucide.createIcons()"></script>
+        onload="window.lucide && window.lucide.createIcons()"></script> -->
 </head>
 
 <body class="min-h-screen bg-white text-slate-900 dark:bg-slate-950 dark:text-slate-100">
@@ -19,31 +21,61 @@
     <header
         class="sticky top-0 z-50 border-b bg-white/70 dark:bg-slate-950/50 backdrop-blur supports-[backdrop-filter]:bg-white/50">
         <nav class="mx-auto max-w-6xl px-4">
-            <div class="flex h-16 items-center justify-between">
-                <a href="#home" class="flex items-center gap-2">
-                    <div class="h-8 w-8 rounded-xl bg-gradient-to-br from-emerald-400 to-blue-500"></div>
-                    <div>
-                        <div class="font-bold tracking-tight">金蚂蚁 Guandan Studio</div>
-                        <div class="text-xs text-slate-500 dark:text-slate-400">让每一局都有故事</div>
+            <div class="flex h-14 md:h-16 items-center justify-between">
+                <!-- 左：Logo + 文案 -->
+                <a href="#home" class="flex items-center gap-2 min-w-0">
+                    <!-- 用你的真实 LOGO -->
+                    <img src="assets/logo.png" alt="金蚂蚁 Logo" class="h-8 w-8 rounded-xl" />
+                    <div class="leading-tight">
+                        <div class="font-bold tracking-tight truncate">金蚂蚁</div>
+                        <div class="text-[11px] text-slate-500 dark:text-slate-400 hidden sm:block">让每一局都有故事</div>
                     </div>
-                    <span class="badge ml-2 hidden sm:inline-flex">Since 2025</span>
+                    <!-- <span class="badge ml-2 hidden md:inline-flex">Since 2025</span> -->
                 </a>
+
+                <!-- 中：桌面导航 -->
                 <div class="hidden md:flex items-center gap-6 text-sm">
                     <a href="#features" class="hover:opacity-80">产品特色</a>
                     <a href="#gameplay" class="hover:opacity-80">玩法亮点</a>
                     <a href="#screens" class="hover:opacity-80">界面预览</a>
-                    <a href="#esports" class="hover:opacity-80">赛事合作</a>
                     <a href="#about" class="hover:opacity-80">关于我们</a>
                     <a href="#contact" class="hover:opacity-80">联系</a>
                 </div>
-                <div class="flex items-center gap-2">
-                    <a href="#download" class="btn btn-outline text-sm"><i data-lucide="download"
-                            class="w-4 h-4"></i>下载</a>
-                    <a href="#contact" class="btn btn-primary text-sm"><i data-lucide="mail"
-                            class="w-4 h-4"></i>商务合作</a>
+
+                <!-- 右：桌面按钮 -->
+                <div class="hidden md:flex items-center gap-2">
+                    <a href="#download" class="btn btn-outline text-sm"><i data-lucide="download" class="w-4 h-4"></i>
+                        下载</a>
+                    <a href="#contact" class="btn btn-primary text-sm"><i data-lucide="mail" class="w-4 h-4"></i>
+                        商务合作</a>
                 </div>
+
+                <!-- 移动端：汉堡按钮 -->
+                <button class="md:hidden inline-flex items-center justify-center rounded-xl border px-3 py-2"
+                    id="menu-toggle" aria-label="打开菜单" aria-expanded="false">
+                    <i data-lucide="menu" class="w-5 h-5"></i>
+                </button>
             </div>
         </nav>
+
+        <!-- 移动端下拉菜单 -->
+        <div id="mobile-menu" class="md:hidden hidden border-t bg-white/95 dark:bg-slate-950/95 backdrop-blur">
+            <div class="mx-auto max-w-6xl px-4 py-3 space-y-3">
+                <div class="grid grid-cols-2 gap-2 text-sm">
+                    <a href="#features" class="btn btn-ghost">产品特色</a>
+                    <a href="#gameplay" class="btn btn-ghost">玩法亮点</a>
+                    <a href="#screens" class="btn btn-ghost">界面预览</a>
+                    <a href="#about" class="btn btn-ghost">关于我们</a>
+                    <a href="#contact" class="btn btn-ghost">联系</a>
+                </div>
+                <div class="grid grid-cols-2 gap-2">
+                    <a href="#download" class="btn btn-outline text-sm"><i data-lucide="download" class="w-4 h-4"></i>
+                        下载</a>
+                    <a href="#contact" class="btn btn-primary text-sm"><i data-lucide="mail" class="w-4 h-4"></i>
+                        商务合作</a>
+                </div>
+            </div>
+        </div>
     </header>
 
     <!-- Hero -->
@@ -429,40 +461,89 @@
         </div>
     </section>
 
-    <!-- 页脚 -->
+    <!-- 页脚（手机适配） -->
     <footer class="border-t">
-        <div class="mx-auto max-w-6xl px-4 py-10 grid md:grid-cols-4 gap-6 text-sm">
-            <div>
-                <div class="flex items-center gap-2">
-                    <div class="h-8 w-8 rounded-xl bg-gradient-to-br from-emerald-400 to-blue-500"></div>
-                    <div class="font-bold">金蚂蚁</div>
+        <div class="mx-auto max-w-6xl px-4 py-8 md:py-12">
+            <!-- 顶部：Logo 与版权 -->
+            <div class="flex items-center gap-2">
+                <!-- 用你的真实 logo -->
+                <img src="assets/logo.png" alt="金蚂蚁 Logo" class="h-7 w-7 rounded-xl" />
+                <span class="font-semibold">金蚂蚁</span>
+            </div>
+            <p class="mt-2 text-xs md:text-sm text-slate-600 dark:text-slate-400">
+                © <span id="year"></span> Guandan Studio. All rights reserved.
+            </p>
+
+            <!-- 手机端：折叠列表；桌面端：四列 -->
+            <div class="mt-6 grid gap-4 md:grid-cols-4">
+                <!-- 列 1（桌面专用留白/简介） -->
+                <div class="hidden md:block">
+                    <p class="text-sm text-slate-600 dark:text-slate-400 leading-6">
+                        让每一局都有故事。专注将传统纸牌数字化、年轻化、赛事化。
+                    </p>
                 </div>
-                <p class="mt-3 text-slate-600 dark:text-slate-400">© <span id="year"></span> Guandan Studio. All rights
-                    reserved.</p>
-            </div>
-            <div>
-                <div class="font-semibold mb-2">产品</div>
-                <ul class="space-y-2 text-slate-600 dark:text-slate-400">
-                    <li><a href="#features" class="hover:underline">特色</a></li>
-                    <li><a href="#gameplay" class="hover:underline">玩法</a></li>
-                    <li><a href="#screens" class="hover:underline">截图</a></li>
-                </ul>
-            </div>
-            <div>
-                <div class="font-semibold mb-2">公司</div>
-                <ul class="space-y-2 text-slate-600 dark:text-slate-400">
-                    <li><a href="#about" class="hover:underline">关于</a></li>
-                    <li><a href="#news" class="hover:underline">新闻</a></li>
-                    <li><a href="#contact" class="hover:underline">联系</a></li>
-                </ul>
-            </div>
-            <div>
-                <div class="font-semibold mb-2">合规</div>
-                <ul class="space-y-2 text-slate-600 dark:text-slate-400">
-                    <li><a href="#" class="hover:underline">隐私政策（占位）</a></li>
-                    <li><a href="#" class="hover:underline">用户协议（占位）</a></li>
-                    <li><a href="#" class="hover:underline">家长监护（占位）</a></li>
-                </ul>
+
+                <!-- 产品 -->
+                <div>
+                    <!-- 手机端折叠 -->
+                    <details class="md:hidden rounded-xl border p-3 bg-white/70 dark:bg-slate-900/40">
+                        <summary class="cursor-pointer font-medium">产品</summary>
+                        <ul class="mt-2 space-y-1 text-sm text-slate-600 dark:text-slate-400 leading-6">
+                            <li><a href="#features" class="hover:underline">特色</a></li>
+                            <li><a href="#gameplay" class="hover:underline">玩法</a></li>
+                            <li><a href="#screens" class="hover:underline">截图</a></li>
+                        </ul>
+                    </details>
+                    <!-- 桌面端列表 -->
+                    <div class="hidden md:block">
+                        <div class="font-semibold mb-2">产品</div>
+                        <ul class="space-y-2 text-sm text-slate-600 dark:text-slate-400 leading-6">
+                            <li><a href="#features" class="hover:underline">特色</a></li>
+                            <li><a href="#gameplay" class="hover:underline">玩法</a></li>
+                            <li><a href="#screens" class="hover:underline">截图</a></li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- 公司 -->
+                <div>
+                    <details class="md:hidden rounded-xl border p-3 bg-white/70 dark:bg-slate-900/40">
+                        <summary class="cursor-pointer font-medium">公司</summary>
+                        <ul class="mt-2 space-y-1 text-sm text-slate-600 dark:text-slate-400 leading-6">
+                            <li><a href="#about" class="hover:underline">关于</a></li>
+                            <li><a href="#news" class="hover:underline">新闻</a></li>
+                            <li><a href="#contact" class="hover:underline">联系</a></li>
+                        </ul>
+                    </details>
+                    <div class="hidden md:block">
+                        <div class="font-semibold mb-2">公司</div>
+                        <ul class="space-y-2 text-sm text-slate-600 dark:text-slate-400 leading-6">
+                            <li><a href="#about" class="hover:underline">关于</a></li>
+                            <li><a href="#news" class="hover:underline">新闻</a></li>
+                            <li><a href="#contact" class="hover:underline">联系</a></li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- 合规 -->
+                <div>
+                    <details class="md:hidden rounded-xl border p-3 bg-white/70 dark:bg-slate-900/40">
+                        <summary class="cursor-pointer font-medium">合规</summary>
+                        <ul class="mt-2 space-y-1 text-sm text-slate-600 dark:text-slate-400 leading-6">
+                            <li><a href="/privacypolicy.html" class="hover:underline">隐私政策</a></li>
+                            <li><a href="/agreement.html" class="hover:underline">用户协议</a></li>
+                            <!-- <li><a href="#" class="hover:underline">家长监护（占位）</a></li> -->
+                        </ul>
+                    </details>
+                    <div class="hidden md:block">
+                        <div class="font-semibold mb-2">合规</div>
+                        <ul class="space-y-2 text-sm text-slate-600 dark:text-slate-400 leading-6">
+                            <li><a href="/privacypolicy.html" class="hover:underline">隐私政策</a></li>
+                            <li><a href="/agreement.html" class="hover:underline">用户协议</a></li>
+                            <!-- <li><a href="#" class="hover:underline">家长监护（占位）</a></li> -->
+                        </ul>
+                    </div>
+                </div>
             </div>
         </div>
     </footer>
@@ -470,7 +551,26 @@
     <!-- 脚本：图标、Tab 切换、年份 -->
     <script>
         // lucide 渲染
-        if (window.lucide) { window.lucide.createIcons(); }
+        // if (window.lucide) { window.lucide.createIcons(); }
+        lucide.createIcons();
+
+        // 移动端菜单开关
+        const menuBtn = document.getElementById('menu-toggle');
+        const mobileMenu = document.getElementById('mobile-menu');
+        if (menuBtn && mobileMenu) {
+            menuBtn.addEventListener('click', () => {
+                const willOpen = mobileMenu.classList.contains('hidden');
+                mobileMenu.classList.toggle('hidden');
+                menuBtn.setAttribute('aria-expanded', String(willOpen));
+                // 切换图标
+                if (window.lucide) {
+                    menuBtn.innerHTML = willOpen
+                        ? '<i data-lucide="x" class="w-5 h-5"></i>'
+                        : '<i data-lucide="menu" class="w-5 h-5"></i>';
+                    window.lucide.createIcons();
+                }
+            });
+        }
 
         // 当前年份
         document.getElementById('year').textContent = new Date().getFullYear();

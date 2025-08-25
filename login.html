@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>邮箱验证码登录 · 掼蛋科技</title>
+    <title>邮箱验证码登录 · 金蚂蚁</title>
     <meta name="description" content="使用邮箱验证码快速登录掼蛋科技账户。" />
     <link rel="stylesheet" href="./dist/output.css" />
     <!-- Lucide 图标库（UMD 包） -->
@@ -17,11 +17,11 @@
         <nav class="mx-auto max-w-6xl px-4">
             <div class="flex h-16 items-center justify-between">
                 <a href="/index.html" class="flex items-center gap-2">
-                    <div class="h-8 w-8 rounded-xl bg-gradient-to-br from-emerald-400 to-blue-500"></div>
-                    <div class="font-bold tracking-tight">掼蛋科技 Guandan Studio</div>
+                    <img src="assets/logo.png" alt="掼蛋科技 Logo" class="h-8 w-8 rounded-xl" />
+                    <div class="font-bold tracking-tight">金蚂蚁</div>
                 </a>
-                <a href="/index.html" class="btn btn-outline text-sm"><i data-lucide="home" class="w-4 h-4"></i>
-                    返回首页</a>
+                <!-- <a href="/index.html" class="btn btn-outline text-sm"><i data-lucide="home" class="w-4 h-4"></i>
+                    返回首页</a> -->
             </div>
         </nav>
     </header>
@@ -51,7 +51,7 @@
             <div
                 class="mx-auto max-w-md rounded-3xl border bg-white/80 dark:bg-slate-900/60 backdrop-blur p-8 shadow-card">
                 <div class="flex items-center gap-2 mb-4">
-                    <div class="h-8 w-8 rounded-xl bg-gradient-to-br from-emerald-400 to-blue-500"></div>
+                    <img src="assets/logo.png" alt="掼蛋科技 Logo" class="h-8 w-8 rounded-xl" />
                     <h2 class="text-xl font-semibold">邮箱验证码登录</h2>
                 </div>
 
@@ -66,16 +66,15 @@
                         <input type="email" name="email" placeholder="name@example.com"
                             class="w-full rounded-xl border px-3 py-2" required>
                     </div>
-                    <div class="flex gap-2">
-                        <input type="text" name="code" placeholder="6 位验证码" class="flex-1 rounded-xl border px-3 py-2"
-                            required pattern="^\d{6}$">
-                        <button type="button" id="send-code" class="btn btn-outline"><i data-lucide="send"
-                                class="w-4 h-4"></i> 获取验证码</button>
+                    <div class="flex gap-2 items-center">
+                        <input type="text" name="code" maxlength="4" inputmode="numeric" placeholder="输入验证码"
+                            class="w-40 text-left tracking-widest text-base rounded-lg border px-2 py-1" />
+                        <button type="button" id="sendCode" class="btn btn-outline">获取验证码</button>
                     </div>
                     <div class="text-sm">
                         <label class="inline-flex items-start gap-2">
                             <input type="checkbox" id="agree" class="mt-1 rounded" required>
-                            <span>我已阅读并同意 <a href="#" class="underline">用户协议</a> 与 <a href="#"
+                            <span>我已阅读并同意 <a href="/agreement.html" class="underline">用户协议</a> 与 <a href="/privacypolicy.html"
                                     class="underline">隐私政策</a></span>
                         </label>
                     </div>
@@ -87,7 +86,7 @@
     </main>
 
     <footer class="border-t">
-        <div class="mx-auto max-w-6xl px-4 py-8 text-sm text-slate-500">© <span id="year"></span> Guandan Studio</div>
+        <div class="mx-auto max-w-6xl px-4 py-8 text-sm text-slate-500">© <span id="year"></span>GoldenAnt</div>
     </footer>
 
     <script>
@@ -155,7 +154,7 @@
             const email = form.elements['email'].value.trim();
             const code = form.elements['code'].value.trim();
             const agree = document.getElementById('agree').checked;
-            if (!/^\d{6}$/.test(code)) { alert('请输入 6 位验证码'); return; }
+            if (!/^\d{4}$/.test(code)) { alert('请输入4位验证码'); return; }
             if (!agree) { alert('请先勾选同意条款'); return; }
 
             // TODO: 调用后端验证码校验/登录接口
