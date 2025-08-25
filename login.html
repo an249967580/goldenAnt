@@ -74,8 +74,8 @@
                     <div class="text-sm">
                         <label class="inline-flex items-start gap-2">
                             <input type="checkbox" id="agree" class="mt-1 rounded" required>
-                            <span>我已阅读并同意 <a href="/agreement.html" class="underline">用户协议</a> 与 <a href="/privacypolicy.html"
-                                    class="underline">隐私政策</a></span>
+                            <span>我已阅读并同意 <a href="/agreement.html" class="underline">用户协议</a> 与 <a
+                                    href="/privacypolicy.html" class="underline">隐私政策</a></span>
                         </label>
                     </div>
                     <button class="btn btn-primary w-full" type="submit"><i data-lucide="log-in" class="w-4 h-4"></i>
@@ -106,7 +106,7 @@
 
         // 获取元素
         const form = document.getElementById('form-otp');
-        const btnSend = document.getElementById('send-code');
+        const btnSend = document.getElementById('sendCode');
 
         // 发送验证码（演示：仅前端倒计时）
         let cd = 0, timer;
@@ -117,14 +117,28 @@
             if (!emailReg.test(email)) { alert('请先填写正确的邮箱地址'); return; }
 
             // TODO: 调用后端发送验证码接口
-
             try {
+                const checkUser = await fetch('http://18.167.55.115/api/Login/checkUserExists', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ account: email, type: 2 })
+                })
+                const checkUserData = await checkUser.json();
+                // console.log('checkUserData', checkUserData);
+                if (checkUserData.code == 200) {
+                    if (checkUserData.data.exists) {
+                        alert('邮箱已经注册过了'); return;
+                    }
+                }
                 const res = await fetch('http://18.167.55.115/api/Login/sendCode', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ account: email, type: 2 })
                 });
                 const data = await res.json();
+                if (data.code == 200) {
+                    alert('验证码已经发送');
+                }
                 // if (!res.ok || data.code !== 0) {   // 假设后端返回 {code:0,msg:'ok'} 表示成功
                 //     alert(data.msg || '发送失败');
                 //     return;
@@ -156,12 +170,26 @@
             const agree = document.getElementById('agree').checked;
             if (!/^\d{4}$/.test(code)) { alert('请输入4位验证码'); return; }
             if (!agree) { alert('请先勾选同意条款'); return; }
-
-            // TODO: 调用后端验证码校验/登录接口
-
-            localStorage.setItem('demo_login', '1');
-            alert('登录成功！');
-            window.location.href = '/index.html';
+            //api/Login/loginOrRegister
+            const params = new URLSearchParams(window.location.search);
+            const inviteId = '';
+            if (params.get('inviteId')) {
+                inviteId = params.get('inviteId');
+            }
+            try {
+                const res = await fetch('http://18.167.55.115/api/Login/loginOrRegister', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ account: email, type: 2, code: code, inviteId: inviteId })
+                });
+                const data = await res.json();
+                if (data.code == 200) {
+                    alert('注册成功');
+                    window.location.href = '/download.html';
+                }
+            } catch (err) {
+                alert('网络错误，请稍后重试');
+            }
         });
     </script>
 </body>
