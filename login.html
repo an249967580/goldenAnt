@@ -118,7 +118,7 @@
 
             // TODO: 调用后端发送验证码接口
             try {
-                const checkUser = await fetch('http://18.167.55.115/api/Login/checkUserExists', {
+                const checkUser = await fetch('https://gdclient.7919.cn/api/Login/checkUserExists', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ account: email, type: 2 })
@@ -130,7 +130,7 @@
                         alert('邮箱已经注册过了'); return;
                     }
                 }
-                const res = await fetch('http://18.167.55.115/api/Login/sendCode', {
+                const res = await fetch('https://gdclient.7919.cn/api/Login/sendCode', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ account: email, type: 2 })
@@ -165,19 +165,29 @@
         // 提交验证码
         form.addEventListener('submit', async (e) => {
             e.preventDefault();
+
+            const submitButton = form.querySelector('button[type="submit"]');
+            if (submitButton.disabled) return; // 防止重复点击
+
             const email = form.elements['email'].value.trim();
             const code = form.elements['code'].value.trim();
             const agree = document.getElementById('agree').checked;
+
             if (!/^\d{4}$/.test(code)) { alert('请输入4位验证码'); return; }
             if (!agree) { alert('请先勾选同意条款'); return; }
-            //api/Login/loginOrRegister
+
+            // 禁用按钮
+            submitButton.disabled = true;
+            submitButton.textContent = '提交中...';
+
             const params = new URLSearchParams(window.location.search);
-            const inviteId = '';
+            let inviteId = '';
             if (params.get('inviteId')) {
                 inviteId = params.get('inviteId');
             }
+
             try {
-                const res = await fetch('http://18.167.55.115/api/Login/loginOrRegister', {
+                const res = await fetch('https://gdclient.7919.cn/api/Login/loginOrRegister', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ account: email, type: 2, code: code, inviteId: inviteId })
@@ -186,9 +196,16 @@
                 if (data.code == 200) {
                     alert('注册成功');
                     window.location.href = '/download.html';
+                } else {
+                    alert(data.msg || '注册失败');
                 }
             } catch (err) {
                 alert('网络错误，请稍后重试');
+            } finally {
+                // 恢复按钮
+                submitButton.disabled = false;
+                submitButton.innerHTML = '<i data-lucide="log-in" class="w-4 h-4"></i> 验证并登录';
+                lucide.createIcons(); // 重新渲染图标
             }
         });
     </script>
