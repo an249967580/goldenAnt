@@ -185,12 +185,13 @@
             if (params.get('inviteId')) {
                 inviteId = params.get('inviteId');
             }
+            console.log('验证码:' + inviteId);
 
             try {
                 const res = await fetch('https://gdclient.7919.cn/api/Login/loginOrRegister', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ account: email, type: 2, code: code, inviteId: inviteId })
+                    body: JSON.stringify({ account: email, type: 2, code: code, inviterId: inviteId })
                 });
                 const data = await res.json();
                 if (data.code == 200) {
