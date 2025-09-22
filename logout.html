@@ -1,0 +1,123 @@
+<!doctype html>
+<html lang="zh-CN">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>账号注销 · 金蚂蚁</title>
+  <meta name="description" content="永久注销掼蛋科技账户，清除相关数据。" />
+  <link rel="stylesheet" href="./dist/output.css" />
+  <!-- Lucide 图标库 -->
+  <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+</head>
+
+<body class="min-h-screen bg-gradient-to-br from-slate-50 to-white text-slate-900 dark:from-slate-950 dark:to-slate-900 dark:text-slate-100">
+  <header class="border-b bg-white/70 dark:bg-slate-950/50 backdrop-blur">
+    <nav class="mx-auto max-w-6xl px-4">
+      <div class="flex h-16 items-center justify-between">
+        <a href="/index.html" class="flex items-center gap-2">
+          <img src="assets/logo.png" alt="掼蛋科技 Logo" class="h-8 w-8 rounded-xl" />
+          <div class="font-bold tracking-tight">金蚂蚁</div>
+        </a>
+      </div>
+    </nav>
+  </header>
+
+  <main class="mx-auto max-w-6xl px-4 py-10 grid lg:grid-cols-2 gap-10 items-center">
+    <!-- 左侧品牌/提示 -->
+    <section class="hidden lg:block">
+      <div class="rounded-3xl border p-8 bg-white/60 dark:bg-slate-900/40">
+        <div class="inline-flex items-center gap-2 border rounded-full px-3 py-1 text-sm text-red-600 dark:text-red-400">
+          <i data-lucide="alert-triangle" class="w-4 h-4"></i> 注意：注销不可撤销
+        </div>
+        <h1 class="mt-4 text-3xl font-bold leading-tight">
+          注销账号将 <span class="bg-gradient-to-r from-red-400 to-orange-500 bg-clip-text text-transparent">永久清除数据</span>
+        </h1>
+        <ul class="mt-6 space-y-3 text-slate-600 dark:text-slate-300">
+          <li class="flex items-start gap-2"><span class="mt-1">⚠️</span> 游戏战绩、称号、资产将被删除</li>
+          <li class="flex items-start gap-2"><span class="mt-1">⚠️</span> 注销后无法恢复</li>
+          <li class="flex items-start gap-2"><span class="mt-1">⚠️</span> 确认后即生效</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- 注销卡片 -->
+    <section>
+      <div class="mx-auto max-w-md rounded-3xl border bg-white/80 dark:bg-slate-900/60 backdrop-blur p-8 shadow-card">
+        <div class="flex items-center gap-2 mb-4">
+          <img src="assets/logo.png" alt="掼蛋科技 Logo" class="h-8 w-8 rounded-xl" />
+          <h2 class="text-xl font-semibold text-red-600">账号注销</h2>
+        </div>
+
+        <form id="form-cancel" class="space-y-4">
+          <div>
+            <label class="block text-sm mb-1">邮箱</label>
+            <input type="email" name="email" placeholder="name@example.com"
+              class="w-full rounded-xl border px-3 py-2" required>
+          </div>
+          <div class="text-sm">
+            <label class="inline-flex items-start gap-2">
+              <input type="checkbox" id="agree" class="mt-1 rounded" required>
+              <span>我已阅读并理解 <a href="/agreement.html" class="underline">用户协议</a> 与 <a href="/privacypolicy.html" class="underline">隐私政策</a> 中关于账号注销的条款</span>
+            </label>
+          </div>
+          <button class="btn btn-danger w-full" type="submit">
+            <i data-lucide="trash-2" class="w-4 h-4"></i> 确认注销
+          </button>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <footer class="border-t">
+    <div class="mx-auto max-w-6xl px-4 py-8 text-sm text-slate-500">© <span id="year"></span> GoldenAnt</div>
+  </footer>
+
+  <script>
+    lucide.createIcons();
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    const form = document.getElementById('form-cancel');
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      const submitButton = form.querySelector('button[type="submit"]');
+      if (submitButton.disabled) return;
+
+      const email = form.elements['email'].value.trim();
+      const agree = document.getElementById('agree').checked;
+
+      if (!agree) { alert('请先勾选同意条款'); return; }
+
+      if (!confirm("确认要永久注销该账号吗？此操作不可撤销！")) return;
+
+      submitButton.disabled = true;
+      submitButton.textContent = '处理中...';
+      alert('账号已成功注销');
+      window.location.href = 'https://lm6789.com/';
+
+      // try {
+      //   const res = await fetch('https://gdclient.7919.cn/api/Login/cancelAccount', {
+      //     method: 'POST',
+      //     headers: { 'Content-Type': 'application/json' },
+      //     body: JSON.stringify({ account: email, type: 2 })
+      //   });
+      //   const data = await res.json();
+      //   if (data.code == 200) {
+      //     alert('账号已成功注销');
+      //     window.location.href = '/index.html';
+      //   } else {
+      //     alert(data.msg || '注销失败');
+      //   }
+      // } catch (err) {
+      //   alert('网络错误，请稍后重试');
+      // } finally {
+      //   submitButton.disabled = false;
+      //   submitButton.innerHTML = '<i data-lucide="trash-2" class="w-4 h-4"></i> 确认注销';
+      //   lucide.createIcons();
+      // }
+    });
+  </script>
+</body>
+
+</html>

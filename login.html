@@ -67,7 +67,7 @@
                             class="w-full rounded-xl border px-3 py-2" required>
                     </div>
                     <div class="flex gap-2 items-center">
-                        <input type="text" name="code" maxlength="4" inputmode="numeric" placeholder="输入验证码"
+                        <input type="text" name="code" maxlength="10" inputmode="numeric" placeholder="输入验证码"
                             class="w-40 text-left tracking-widest text-base rounded-lg border px-2 py-1" />
                         <button type="button" id="sendCode" class="btn btn-outline">获取验证码</button>
                     </div>
@@ -173,7 +173,7 @@
             const code = form.elements['code'].value.trim();
             const agree = document.getElementById('agree').checked;
 
-            if (!/^\d{4}$/.test(code)) { alert('请输入4位验证码'); return; }
+            if (!/^\d{6}$/.test(code)) { alert('请输入4位验证码'); return; }
             if (!agree) { alert('请先勾选同意条款'); return; }
 
             // 禁用按钮
