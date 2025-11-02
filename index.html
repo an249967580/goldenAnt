@@ -10,7 +10,7 @@
     <link rel="stylesheet" href="./dist/output.css" />
     <!-- 可选：图标库（与 Tailwind 构建无关，可保留或去掉） -->
     <!-- Lucide 图标库（UMD 包） -->
-    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+    <script src="https://unpkg.com/lucide@0.452.0/dist/umd/lucide.min.js"></script>
     <!-- <script src="https://unpkg.com/lucide@latest" defer></script>
     <script src="https://cdn.jsdelivr.net/npm/lucide@latest" defer
         onload="window.lucide && window.lucide.createIcons()"></script> -->
@@ -92,8 +92,8 @@
                     <p class="mt-4 text-slate-600 dark:text-slate-400 max-w-xl">我们用实时反作弊、智能匹配、好友组队与俱乐部赛，打造更纯粹的掼蛋竞技与社交体验。
                     </p>
                     <div class="mt-6 flex flex-wrap gap-3">
-                        <a href="#download" class="btn btn-primary text-base"><i data-lucide="download"
-                                class="w-5 h-5"></i> 立即下载</a>
+                        <a href="https://lm6789.com/download.html" class="btn btn-primary text-base"><i
+                                data-lucide="download" class="w-5 h-5"></i> 立即下载</a>
                         <a href="#video" class="btn btn-outline text-base"><i data-lucide="play-circle"
                                 class="w-5 h-5"></i> 观看演示</a>
                     </div>
@@ -354,7 +354,8 @@
                         <h3 class="font-semibold">Google Play</h3>
                     </div>
                     <p class="text-slate-600 dark:text-slate-400">支持安卓 6.0+，弱网优化与低端机适配。</p>
-                    <a class="btn btn-outline w-full mt-4" href="#">即将上架</a>
+                    <a class="btn btn-outline w-full mt-4"
+                        href="https://play.google.com/store/apps/details?id=com.goldenant.id">点击前往下载</a>
                 </div>
                 <div class="card">
                     <div class="flex items-center gap-2 mb-1"><i data-lucide="globe" class="w-5 h-5"></i>
@@ -552,7 +553,12 @@
     <script>
         // lucide 渲染
         // if (window.lucide) { window.lucide.createIcons(); }
-        lucide.createIcons();
+        // 图标渲染
+        if (window.lucide && typeof window.lucide.createIcons === 'function') {
+            lucide.createIcons();
+        } else {
+            console.warn('Lucide icons not loaded');
+        }
 
         // 移动端菜单开关
         const menuBtn = document.getElementById('menu-toggle');

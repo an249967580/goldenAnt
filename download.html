@@ -1,13 +1,15 @@
 <!doctype html>
 <html lang="zh-CN">
+
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>下载中心 · 金蚂蚁</title>
   <meta name="description" content="下载掼蛋科技 APP：iOS App Store、Android APK、Google Play。" />
   <link rel="stylesheet" href="./dist/output.css" />
-  <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+  <script src="https://unpkg.com/lucide@0.452.0/dist/umd/lucide.min.js"></script>
 </head>
+
 <body class="min-h-screen text-white">
   <!-- 顶部导航（极简） -->
   <header class="sticky top-0 z-50 bg-white/10 backdrop-blur border-b border-white/20 text-white">
@@ -27,7 +29,8 @@
     <!-- 背景层：你有素材就把下面两张换成你的文件名；没有就保留渐变 -->
     <div class="absolute inset-0 bg-gradient-to-b from-[#FFAB2E] via-[#FF8A00] to-[#FF6A00]"></div>
     <!-- 可选：整屏背景图（如有） -->
-    <img src="assets/screenshot1.png" alt="背景" class="absolute inset-0 w-full h-full object-cover opacity-90" style="display: none;" />
+    <img src="assets/screenshot1.png" alt="背景" class="absolute inset-0 w-full h-full object-cover opacity-90"
+      style="display: none;" />
 
     <!-- 内容容器 -->
     <div class="relative z-10 mx-auto max-w-md px-4 pt-8 pb-28 text-center">
@@ -45,17 +48,17 @@
       <!-- 底部 3 个下载按钮：圆角描边，白色图标文字，居中堆叠 -->
       <div class="absolute inset-x-0 bottom-8 flex flex-col items-center gap-4 px-6">
         <a id="btn-appstore" target="_blank" rel="noopener"
-           class="w-full max-w-xs rounded-full ring-2 ring-white/80 bg-white/10 hover:bg-white/20 transition px-6 py-3 flex items-center justify-center gap-2 text-white backdrop-blur-sm shadow-lg">
+          class="w-full max-w-xs rounded-full ring-2 ring-white/80 bg-white/10 hover:bg-white/20 transition px-6 py-3 flex items-center justify-center gap-2 text-white backdrop-blur-sm shadow-lg">
           <i data-lucide="apple" class="w-5 h-5"></i>
           <span class="font-medium">APP Store</span>
         </a>
         <a id="btn-apk" target="_blank" rel="noopener"
-           class="w-full max-w-xs rounded-full ring-2 ring-white/80 bg-white/10 hover:bg-white/20 transition px-6 py-3 flex items-center justify-center gap-2 text-white backdrop-blur-sm shadow-lg">
+          class="w-full max-w-xs rounded-full ring-2 ring-white/80 bg-white/10 hover:bg-white/20 transition px-6 py-3 flex items-center justify-center gap-2 text-white backdrop-blur-sm shadow-lg">
           <i data-lucide="smartphone" class="w-5 h-5"></i>
           <span class="font-medium">Android</span>
         </a>
         <a id="btn-gp" target="_blank" rel="noopener"
-           class="w-full max-w-xs rounded-full ring-2 ring-white/80 bg-white/10 hover:bg-white/20 transition px-6 py-3 flex items-center justify-center gap-2 text-white backdrop-blur-sm shadow-lg">
+          class="w-full max-w-xs rounded-full ring-2 ring-white/80 bg-white/10 hover:bg-white/20 transition px-6 py-3 flex items-center justify-center gap-2 text-white backdrop-blur-sm shadow-lg">
           <i data-lucide="play" class="w-5 h-5"></i>
           <span class="font-medium">Google Play</span>
         </a>
@@ -65,15 +68,20 @@
 
   <script>
     // 图标渲染
-    lucide.createIcons();
+    if (window.lucide && typeof window.lucide.createIcons === 'function') {
+      lucide.createIcons();
+    } else {
+      console.warn('Lucide icons not loaded');
+    }
 
     // ====== 替换为你的真实下载链接 ======
     const APPSTORE_URL = '#'; // 如：https://apps.apple.com/app/idxxxxxx
-    const APK_URL      = 'http://lm6789.com/download/goldenAnt-debug_v1.2.1.apk'; // 如：https://cdn.example.com/app.apk
-    const GP_URL       = '#'; // 如：https://play.google.com/store/apps/details?id=xxx
+    const APK_URL = 'https://lm6789.com/download/goldenAnt_v1.1.1.apk'; // 如：https://cdn.example.com/app.apk
+    const GP_URL = 'https://play.google.com/store/apps/details?id=com.goldenant.id'; // 如：https://play.google.com/store/apps/details?id=xxx
     document.getElementById('btn-appstore').href = APPSTORE_URL;
     document.getElementById('btn-apk').href = APK_URL;
     document.getElementById('btn-gp').href = GP_URL;
   </script>
 </body>
+
 </html>

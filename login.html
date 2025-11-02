@@ -4,11 +4,10 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>邮箱验证码登录 · 金蚂蚁</title>
-    <meta name="description" content="使用邮箱验证码快速登录掼蛋科技账户。" />
+    <title>验证码登录 · 金蚂蚁</title>
+    <meta name="description" content="使用邮箱或手机号验证码快速登录掼蛋科技账户。" />
     <link rel="stylesheet" href="./dist/output.css" />
-    <!-- Lucide 图标库（UMD 包） -->
-    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+    <script src="https://unpkg.com/lucide@0.452.0/dist/umd/lucide.min.js"></script>
 </head>
 
 <body
@@ -20,47 +19,84 @@
                     <img src="assets/logo.png" alt="掼蛋科技 Logo" class="h-8 w-8 rounded-xl" />
                     <div class="font-bold tracking-tight">金蚂蚁</div>
                 </a>
-                <!-- <a href="/index.html" class="btn btn-outline text-sm"><i data-lucide="home" class="w-4 h-4"></i>
-                    返回首页</a> -->
             </div>
         </nav>
     </header>
 
     <main class="mx-auto max-w-6xl px-4 py-10 grid lg:grid-cols-2 gap-10 items-center">
-        <!-- 左侧品牌/卖点 -->
+        <!-- 左侧介绍 -->
         <section class="hidden lg:block">
             <div class="rounded-3xl border p-8 bg-white/60 dark:bg-slate-900/40">
                 <div
                     class="inline-flex items-center gap-2 border rounded-full px-3 py-1 text-sm text-slate-600 dark:text-slate-300">
                     <i data-lucide="shield-check" class="w-4 h-4"></i> 公平竞技 · 实时反作弊
                 </div>
-                <h1 class="mt-4 text-3xl font-bold leading-tight">邮箱验证码登录，
-                    <span
+                <h1 class="mt-4 text-3xl font-bold leading-tight">
+                    验证码登录，<span
                         class="bg-gradient-to-r from-emerald-400 to-blue-500 bg-clip-text text-transparent">更快捷更安全</span>
                 </h1>
                 <ul class="mt-6 space-y-3 text-slate-600 dark:text-slate-300">
-                    <li class="flex items-start gap-2"><span class="mt-1">✅</span> 无需记密码，输入验证码即登录</li>
-                    <li class="flex items-start gap-2"><span class="mt-1">✅</span> 云端同步战绩与称号</li>
-                    <li class="flex items-start gap-2"><span class="mt-1">✅</span> 赛事报名与回放</li>
+                    <li>✅ 支持邮箱或手机号登录</li>
+                    <li>✅ 云端同步战绩与称号</li>
+                    <li>✅ 无需密码，输入验证码即可登录</li>
                 </ul>
             </div>
         </section>
 
-        <!-- 登录卡片（邮箱 + 验证码） -->
+        <!-- 登录卡片 -->
         <section>
             <div
                 class="mx-auto max-w-md rounded-3xl border bg-white/80 dark:bg-slate-900/60 backdrop-blur p-8 shadow-card">
                 <div class="flex items-center gap-2 mb-4">
                     <img src="assets/logo.png" alt="掼蛋科技 Logo" class="h-8 w-8 rounded-xl" />
-                    <h2 class="text-xl font-semibold">邮箱验证码登录</h2>
+                    <h2 class="text-xl font-semibold">验证码登录</h2>
                 </div>
 
-                <!-- 邀请码提示 -->
+                <!-- 选项卡 -->
+                <div class="mb-4">
+                    <div id="login-tabs" class="grid grid-cols-2 rounded-xl border overflow-hidden">
+                        <button id="tab-phone" type="button" class="py-2 font-medium transition-colors"
+                            aria-selected="true">
+                            手机号登录
+                        </button>
+                        <button id="tab-email" type="button" class="py-2 font-medium transition-colors"
+                            aria-selected="false">
+                            邮箱登录
+                        </button>
+                    </div>
+                </div>
+
+                <!-- 邀请码 -->
                 <div id="invite-box"
                     class="hidden mb-4 p-3 rounded-xl bg-emerald-50 border border-emerald-200 text-emerald-700 text-sm">
                 </div>
 
-                <form id="form-otp" class="space-y-4">
+                <!-- 手机登录 -->
+                <form id="form-phone" class="space-y-4">
+                    <div>
+                        <label class="block text-sm mb-1">手机号</label>
+                        <input type="tel" name="phone" placeholder="请输入手机号" class="w-full rounded-xl border px-3 py-2"
+                            required>
+                    </div>
+                    <div class="flex gap-2 items-center">
+                        <input type="text" name="code" maxlength="6" inputmode="numeric" placeholder="输入验证码"
+                            class="w-40 text-left tracking-widest text-base rounded-lg border px-2 py-1" />
+                        <button type="button" id="sendPhoneCode" class="btn btn-outline">获取验证码</button>
+                    </div>
+                    <div class="text-sm">
+                        <label class="inline-flex items-start gap-2">
+                            <input type="checkbox" id="agreePhone" class="mt-1 rounded" required>
+                            <span>我已阅读并同意 <a href="/agreement.html" class="underline">用户协议</a> 与 <a
+                                    href="/privacypolicy.html" class="underline">隐私政策</a></span>
+                        </label>
+                    </div>
+                    <button class="btn btn-primary w-full" type="submit">
+                        <i data-lucide="log-in" class="w-4 h-4"></i> 验证并登录
+                    </button>
+                </form>
+
+                <!-- 邮箱登录 -->
+                <form id="form-email" class="space-y-4 hidden">
                     <div>
                         <label class="block text-sm mb-1">邮箱</label>
                         <input type="email" name="email" placeholder="name@example.com"
@@ -69,33 +105,59 @@
                     <div class="flex gap-2 items-center">
                         <input type="text" name="code" maxlength="10" inputmode="numeric" placeholder="输入验证码"
                             class="w-40 text-left tracking-widest text-base rounded-lg border px-2 py-1" />
-                        <button type="button" id="sendCode" class="btn btn-outline">获取验证码</button>
+                        <button type="button" id="sendEmailCode" class="btn btn-outline">获取验证码</button>
                     </div>
                     <div class="text-sm">
                         <label class="inline-flex items-start gap-2">
-                            <input type="checkbox" id="agree" class="mt-1 rounded" required>
+                            <input type="checkbox" id="agreeEmail" class="mt-1 rounded" required>
                             <span>我已阅读并同意 <a href="/agreement.html" class="underline">用户协议</a> 与 <a
                                     href="/privacypolicy.html" class="underline">隐私政策</a></span>
                         </label>
                     </div>
-                    <button class="btn btn-primary w-full" type="submit"><i data-lucide="log-in" class="w-4 h-4"></i>
-                        验证并登录</button>
+                    <button class="btn btn-primary w-full" type="submit">
+                        <i data-lucide="log-in" class="w-4 h-4"></i> 验证并登录
+                    </button>
                 </form>
             </div>
         </section>
     </main>
 
     <footer class="border-t">
-        <div class="mx-auto max-w-6xl px-4 py-8 text-sm text-slate-500">© <span id="year"></span>GoldenAnt</div>
+        <div class="mx-auto max-w-6xl px-4 py-8 text-sm text-slate-500">© <span id="year"></span> GoldenAnt</div>
     </footer>
 
     <script>
-        // 渲染图标
         lucide.createIcons();
-        // 年份
         document.getElementById('year').textContent = new Date().getFullYear();
 
-        // 显示邀请码
+        // Tab 切换
+        const tabPhone = document.getElementById('tab-phone');
+        const tabEmail = document.getElementById('tab-email');
+        const formPhone = document.getElementById('form-phone');
+        const formEmail = document.getElementById('form-email');
+        function setActive(tabBtn) {
+            [tabPhone, tabEmail].forEach(b => {
+                b.setAttribute('aria-selected', 'false');
+                b.classList.remove('bg-emerald-500', 'text-white');
+            });
+            tabBtn.setAttribute('aria-selected', 'true');
+            tabBtn.classList.add('bg-emerald-500', 'text-white');
+        }
+        function showPhone() {
+            formPhone.classList.remove('hidden');
+            formEmail.classList.add('hidden');
+            setActive(tabPhone);
+        }
+        function showEmail() {
+            formEmail.classList.remove('hidden');
+            formPhone.classList.add('hidden');
+            setActive(tabEmail);
+        }
+        tabPhone.addEventListener('click', showPhone);
+        tabEmail.addEventListener('click', showEmail);
+        showPhone();
+
+        // 邀请码
         const params = new URLSearchParams(window.location.search);
         const inviteId = params.get('inviteId');
         if (inviteId) {
@@ -104,110 +166,100 @@
             box.classList.remove('hidden');
         }
 
-        // 获取元素
-        const form = document.getElementById('form-otp');
-        const btnSend = document.getElementById('sendCode');
+        // 倒计时
+        function startCountdown(btn) {
+            let cd = 60;
+            btn.disabled = true;
+            btn.textContent = `已发送(${cd}s)`;
+            const timer = setInterval(() => {
+                cd--;
+                btn.textContent = `已发送(${cd}s)`;
+                if (cd <= 0) {
+                    clearInterval(timer);
+                    btn.disabled = false;
+                    btn.innerHTML = '<i data-lucide="send" class="w-4 h-4"></i> 重新获取';
+                    lucide.createIcons();
+                }
+            }, 1000);
+        }
 
-        // 发送验证码（演示：仅前端倒计时）
-        let cd = 0, timer;
-        btnSend.addEventListener('click', async () => {
-            if (cd > 0) return;
-            const email = form.elements['email'].value.trim();
-            const emailReg = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-            if (!emailReg.test(email)) { alert('请先填写正确的邮箱地址'); return; }
-
-            // TODO: 调用后端发送验证码接口
+        // 手机验证码
+        document.getElementById('sendPhoneCode').addEventListener('click', async () => {
+            const phone = formPhone.elements['phone'].value.trim();
+            if (!/^1[3-9]\d{9}$/.test(phone)) return alert('请输入正确手机号');
+            const btn = document.getElementById('sendPhoneCode');
             try {
-                const checkUser = await fetch('https://gdclient.7919.cn/api/Login/checkUserExists', {
+                const check = await fetch('https://gdclient.7919.cn/api/Login/checkUserExists', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ account: phone, type: 1 })
+                });
+                const checkData = await check.json();
+                if (checkData.code == 200 && checkData.data.exists) return alert('该手机号已注册，请直接登录');
+                const res = await fetch('https://gdclient.7919.cn/api/Login/sendCode', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ account: phone, type: 1 })
+                });
+                const data = await res.json();
+                if (data.code == 200) { alert('验证码已发送'); startCountdown(btn); }
+                else alert(data.msg || '发送失败');
+            } catch { alert('网络错误'); }
+        });
+
+        // 邮箱验证码
+        document.getElementById('sendEmailCode').addEventListener('click', async () => {
+            const email = formEmail.elements['email'].value.trim();
+            const reg = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!reg.test(email)) return alert('请输入正确的邮箱地址');
+            const btn = document.getElementById('sendEmailCode');
+            try {
+                const check = await fetch('https://gdclient.7919.cn/api/Login/checkUserExists', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ account: email, type: 2 })
-                })
-                const checkUserData = await checkUser.json();
-                // console.log('checkUserData', checkUserData);
-                if (checkUserData.code == 200) {
-                    if (checkUserData.data.exists) {
-                        alert('邮箱已经注册过了'); return;
-                    }
-                }
+                });
+                const checkData = await check.json();
+                if (checkData.code == 200 && checkData.data.exists) return alert('该邮箱已注册，请直接登录');
                 const res = await fetch('https://gdclient.7919.cn/api/Login/sendCode', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ account: email, type: 2 })
                 });
                 const data = await res.json();
-                if (data.code == 200) {
-                    alert('验证码已经发送');
-                }
-                // if (!res.ok || data.code !== 0) {   // 假设后端返回 {code:0,msg:'ok'} 表示成功
-                //     alert(data.msg || '发送失败');
-                //     return;
-                // }
-
-                // 启动倒计时
-                cd = 60;
-                btnSend.disabled = true;
-                btnSend.textContent = `已发送(60s)`;
-                timer = setInterval(() => {
-                    cd--; btnSend.textContent = `已发送(${cd}s)`;
-                    if (cd <= 0) {
-                        clearInterval(timer);
-                        btnSend.disabled = false;
-                        btnSend.innerHTML = '<i data-lucide="send" class="w-4 h-4"></i> 重新获取';
-                        lucide.createIcons();
-                    }
-                }, 1000);
-            } catch (err) {
-                alert('网络错误，请稍后重试');
-            }
+                if (data.code == 200) { alert('验证码已发送'); startCountdown(btn); }
+                else alert(data.msg || '发送失败');
+            } catch { alert('网络错误'); }
         });
 
-        // 提交验证码
-        form.addEventListener('submit', async (e) => {
+        // 登录
+        async function handleLogin(account, type, code) {
+            const res = await fetch('https://gdclient.7919.cn/api/Login/loginOrRegister', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ account, type, code, inviterId: inviteId })
+            });
+            const data = await res.json();
+            if (data.code == 200) {
+                alert('登录成功');
+                location.href = '/download.html';
+            } else alert(data.msg || '登录失败');
+        }
+
+        formPhone.addEventListener('submit', e => {
             e.preventDefault();
+            const phone = formPhone.elements['phone'].value.trim();
+            const code = formPhone.elements['code'].value.trim();
+            if (!/^\d{4,6}$/.test(code)) return alert('请输入正确验证码');
+            handleLogin(phone, 1, code);
+        });
 
-            const submitButton = form.querySelector('button[type="submit"]');
-            if (submitButton.disabled) return; // 防止重复点击
-
-            const email = form.elements['email'].value.trim();
-            const code = form.elements['code'].value.trim();
-            const agree = document.getElementById('agree').checked;
-
-            if (!/^\d{6}$/.test(code)) { alert('请输入4位验证码'); return; }
-            if (!agree) { alert('请先勾选同意条款'); return; }
-
-            // 禁用按钮
-            submitButton.disabled = true;
-            submitButton.textContent = '提交中...';
-
-            const params = new URLSearchParams(window.location.search);
-            let inviteId = '';
-            if (params.get('inviteId')) {
-                inviteId = params.get('inviteId');
-            }
-            console.log('验证码:' + inviteId);
-
-            try {
-                const res = await fetch('https://gdclient.7919.cn/api/Login/loginOrRegister', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ account: email, type: 2, code: code, inviterId: inviteId })
-                });
-                const data = await res.json();
-                if (data.code == 200) {
-                    alert('注册成功');
-                    window.location.href = '/download.html';
-                } else {
-                    alert(data.msg || '注册失败');
-                }
-            } catch (err) {
-                alert('网络错误，请稍后重试');
-            } finally {
-                // 恢复按钮
-                submitButton.disabled = false;
-                submitButton.innerHTML = '<i data-lucide="log-in" class="w-4 h-4"></i> 验证并登录';
-                lucide.createIcons(); // 重新渲染图标
-            }
+        formEmail.addEventListener('submit', e => {
+            e.preventDefault();
+            const email = formEmail.elements['email'].value.trim();
+            const code = formEmail.elements['code'].value.trim();
+            if (!/^\d{4,6}$/.test(code)) return alert('请输入正确验证码');
+            handleLogin(email, 2, code);
         });
     </script>
 </body>
