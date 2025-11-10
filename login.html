@@ -8,6 +8,8 @@
     <meta name="description" content="使用邮箱或手机号验证码快速登录掼蛋科技账户。" />
     <link rel="stylesheet" href="./dist/output.css" />
     <script src="https://unpkg.com/lucide@0.452.0/dist/umd/lucide.min.js"></script>
+
+    <script type="text/javascript" src="https://o.alicdn.com/yd-cloudauth/cloudauth-cdn/jsvm_all.js"></script>
 </head>
 
 <body
@@ -300,29 +302,70 @@
             <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
             <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z"></path>
         </svg> 登录中...`;
-            try {
-                const res = await fetch('https://gdclient.7919.cn/api/Login/loginOrRegister', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ account, type, code, inviterId: inviteId })
-                });
-                const data = await res.json();
-                if (data.code == 200) {
-                    showToast('登录成功', 'success');
-                    location.href = '/download.html';
-                } else {
-                    showToast(data.msg || '登录失败', 'error');
-                    btn.disabled = false;
-                    btn.innerHTML = oldHtml;
-                }
-            } catch {
-                showToast('网络错误', 'error');
-                btn.disabled = false;
-                btn.innerHTML = oldHtml;
-            } finally {
-                btn.disabled = false;
-                btn.innerHTML = oldHtml;
+            showToast('正在获取 MetaInfo...');
+            const metaInfo = window.getMetaInfo(); // ✅ 调用阿里云 SDK 获取浏览器设备指纹
+            console.log('MetaInfo:', metaInfo);
+
+            // ✅ 模拟后端返回（这里直接构造一个假的认证 URL）
+            const mockToken = "mock-" + Date.now();
+            const certifyUrl = `https://o.alicdn.com/yd-cloudauth/demo.html?token=${mockToken}`;
+
+            const resultBox = document.getElementById('result');
+            if (resultBox) {
+                resultBox.innerHTML = `
+    <p>MetaInfo 已生成，模拟跳转认证页：</p>
+    <p class="break-all text-blue-600">${certifyUrl}</p>
+    <p class="mt-2 text-emerald-600">3 秒后自动跳转...</p>
+  `;
             }
+
+            // ✅ 3 秒后跳转到阿里云实人认证测试页面
+            setTimeout(() => {
+                window.location.href = certifyUrl;
+            }, 3000);
+            /* ✅ 第一步：调用阿里云实人认证 */
+            // showToast('正在进行人脸识别认证...', 'info');
+            // const metaInfo = window.getMetaInfo();
+
+            // // 调用你的后端接口获取认证URL（此接口需调用阿里云 InitFaceVerify）
+            // const verifyRes = await fetch('https://yourserver.com/api/initFaceVerify', {
+            //     method: 'POST',
+            //     headers: { 'Content-Type': 'application/json' },
+            //     body: JSON.stringify(metaInfo)
+            // });
+            // const verifyData = await verifyRes.json();
+
+            // if (verifyData?.resultObject?.certifyUrl) {
+            //     // 跳转至阿里云人脸认证页面
+            //     showToast('即将跳转人脸认证...', 'info');
+            //     window.location.href = verifyData.resultObject.certifyUrl;
+            //     return; // ⚠️ 此时不执行后续登录逻辑，待认证完成后返回页面再登录
+            // } else {
+            //     showToast('未能获取认证链接，请稍后再试', 'error');
+            // }
+            // try {
+            //     const res = await fetch('https://gdclient.7919.cn/api/Login/loginOrRegister', {
+            //         method: 'POST',
+            //         headers: { 'Content-Type': 'application/json' },
+            //         body: JSON.stringify({ account, type, code, inviterId: inviteId })
+            //     });
+            //     const data = await res.json();
+            //     if (data.code == 200) {
+            //         showToast('登录成功', 'success');
+            //         location.href = '/download.html';
+            //     } else {
+            //         showToast(data.msg || '登录失败', 'error');
+            //         btn.disabled = false;
+            //         btn.innerHTML = oldHtml;
+            //     }
+            // } catch {
+            //     showToast('网络错误', 'error');
+            //     btn.disabled = false;
+            //     btn.innerHTML = oldHtml;
+            // } finally {
+            //     btn.disabled = false;
+            //     btn.innerHTML = oldHtml;
+            // }
         }
 
         formPhone.addEventListener('submit', e => {
@@ -330,7 +373,7 @@
             const btn = e.submitter; // ✅ 获取提交按钮
             const phone = formPhone.elements['phone'].value.trim();
             const code = formPhone.elements['code'].value.trim();
-            if (!/^\d{4,6}$/.test(code)) return showToast('请输入正确验证码');
+            // if (!/^\d{4,6}$/.test(code)) return showToast('请输入正确验证码');
             handleLogin(phone, 1, code, btn);
         });
 
