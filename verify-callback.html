@@ -1,0 +1,195 @@
+<!doctype html>
+<html lang="zh-CN">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>人脸认证结果 · 金蚂蚁</title>
+  <link rel="stylesheet" href="./dist/output.css" />
+  <script src="https://unpkg.com/lucide@0.452.0/dist/umd/lucide.min.js"></script>
+
+  <style>
+    .fade-in {
+      animation: fadeIn 0.8s ease forwards;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(10px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .glow {
+      animation: glowPulse 2s infinite alternate;
+    }
+
+    @keyframes glowPulse {
+      from {
+        filter: drop-shadow(0 0 0px rgba(16, 185, 129, 0));
+      }
+
+      to {
+        filter: drop-shadow(0 0 12px rgba(16, 185, 129, 0.5));
+      }
+    }
+  </style>
+</head>
+
+<body
+  class="min-h-screen flex flex-col items-center justify-center bg-gradient-to-br from-emerald-50 via-white to-blue-50 dark:from-slate-950 dark:via-slate-900 dark:to-slate-800 text-slate-900 dark:text-slate-100 select-none">
+
+  <!-- 内容卡片 -->
+  <div
+    class="fade-in w-full max-w-md text-center p-8 rounded-3xl border bg-white/80 dark:bg-slate-900/70 backdrop-blur-md shadow-lg shadow-emerald-200/20 dark:shadow-black/40 space-y-6">
+
+    <img src="assets/logo.png" alt="logo"
+      class="w-20 h-20 mx-auto rounded-2xl glow transition-all duration-300" />
+
+    <h1 class="text-2xl font-bold tracking-tight">人脸认证结果</h1>
+    <p id="statusText" class="text-slate-600 dark:text-slate-300">请稍候...</p>
+
+    <!-- 动态图标 -->
+    <div id="statusIcon" class="flex justify-center mt-4 text-emerald-500">
+      <i data-lucide="loader-2" class="w-8 h-8 animate-spin"></i>
+    </div>
+
+    <!-- 按钮 -->
+    <div id="actionBtnBox" class="mt-8 hidden">
+      <button onclick="window.location.href='/login.html'"
+        class="px-5 py-2.5 bg-emerald-500 hover:bg-emerald-600 text-white rounded-xl shadow-md transition-all duration-200">
+        返回登录页
+      </button>
+    </div>
+  </div>
+
+  <footer class="mt-10 text-xs text-slate-500 dark:text-slate-400 opacity-80">
+    © <span id="year"></span> GoldenAnt · 掼蛋科技
+  </footer>
+
+  <script>
+    lucide.createIcons();
+    document.getElementById("year").textContent = new Date().getFullYear();
+
+    const statusText = document.getElementById("statusText");
+    const statusIcon = document.getElementById("statusIcon");
+    const actionBtnBox = document.getElementById("actionBtnBox");
+
+    function setStatus(msg, type = "info") {
+      const colors = {
+        success: "text-emerald-500",
+        error: "text-red-500",
+        info: "text-blue-500",
+      };
+      const icons = {
+        success: "check-circle",
+        error: "x-circle",
+        info: "loader-2",
+      };
+
+      statusText.textContent = msg;
+      statusText.className =
+        "text-base mt-2 " +
+        {
+          success: "text-emerald-600 dark:text-emerald-400",
+          error: "text-red-600 dark:text-red-400",
+          info: "text-slate-600 dark:text-slate-300",
+        }[type];
+
+      statusIcon.innerHTML = `<i data-lucide="${icons[type]}" class="w-10 h-10 ${type === "info" ? "animate-spin" : ""} ${colors[type]}"></i>`;
+      lucide.createIcons();
+    }
+
+    async function handleVerifyResult() {
+      const params = new URLSearchParams(window.location.search);
+      const rawResponse = params.get("response");
+
+      if (!rawResponse) {
+        setStatus("未检测到认证返回参数", "error");
+        actionBtnBox.classList.remove("hidden");
+        return;
+      }
+
+      let decoded;
+      try {
+        decoded = JSON.parse(decodeURIComponent(rawResponse));
+      } catch (e) {
+        console.error("解析 response 出错:", e);
+        setStatus("认证数据解析失败", "error");
+        actionBtnBox.classList.remove("hidden");
+        return;
+      }
+
+      console.log("阿里云返回:", decoded);
+
+      const certifyId = decoded.extInfo?.certifyId;
+      const verifyCode = decoded.extInfo?.verifyCode || decoded.reason;
+
+      if (!certifyId) {
+        setStatus("未找到认证 ID", "error");
+        actionBtnBox.classList.remove("hidden");
+        return;
+      }
+
+      const isPassed = verifyCode === "SUCCESS" || verifyCode === "PASS";
+
+      if (!isPassed) {
+        setStatus(`认证未通过：${verifyCode}`, "error");
+        actionBtnBox.classList.remove("hidden");
+        return;
+      }
+
+      // ✅ 认证成功
+      setStatus("认证成功，正在登录中...", "info");
+
+      const stored = JSON.parse(localStorage.getItem("pendingLogin") || "{}");
+      if (!stored.account || !stored.code) {
+        setStatus("登录数据缺失，请重新登录", "error");
+        actionBtnBox.classList.remove("hidden");
+        return;
+      }
+
+      const { account, type, code, inviteId } = stored;
+
+      try {
+        const res = await fetch("https://gdclient.7919.cn/api/Login/loginOrRegister", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            account,
+            type,
+            code,
+            inviterId: inviteId,
+            certifyId,
+            open: true
+          })
+        });
+
+        const data = await res.json();
+        console.log("登录返回:", data);
+
+        if (data.code === 200) {
+          setStatus("登录成功 ✅，正在跳转...", "success");
+          localStorage.removeItem("pendingLogin");
+          setTimeout(() => (location.href = "/download.html"), 1500);
+        } else {
+          setStatus(data.msg || "登录失败", "error");
+          actionBtnBox.classList.remove("hidden");
+        }
+      } catch (err) {
+        console.error("登录请求失败:", err);
+        setStatus("网络错误，请重试", "error");
+        actionBtnBox.classList.remove("hidden");
+      }
+    }
+
+    handleVerifyResult();
+  </script>
+</body>
+
+</html>

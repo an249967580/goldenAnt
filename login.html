@@ -264,17 +264,17 @@
             const oldHtml = btn.innerHTML;
             setLoading(btn, '发送中...');
             try {
-                const check = await fetch('https://gdclient.7919.cn/api/Login/checkUserExists', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ account: email, type: 2 })
-                });
-                const checkData = await check.json();
-                if (checkData.code == 200 && checkData.data.exists) {
-                    showToast('该邮箱已注册');
-                    resetButton(btn, oldHtml);
-                    return;
-                }
+                // const check = await fetch('https://gdclient.7919.cn/api/Login/checkUserExists', {
+                //     method: 'POST',
+                //     headers: { 'Content-Type': 'application/json' },
+                //     body: JSON.stringify({ account: email, type: 2 })
+                // });
+                // const checkData = await check.json();
+                // if (checkData.code == 200 && checkData.data.exists) {
+                //     showToast('该邮箱已注册');
+                //     resetButton(btn, oldHtml);
+                //     return;
+                // }
                 const res = await fetch('https://gdclient.7919.cn/api/Login/sendCode', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
@@ -302,70 +302,67 @@
             <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
             <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z"></path>
         </svg> 登录中...`;
-//             showToast('正在获取 MetaInfo...');
-//             const metaInfo = window.getMetaInfo(); // ✅ 调用阿里云 SDK 获取浏览器设备指纹
-//             console.log('MetaInfo:', metaInfo);
+            showToast('正在进行人脸识别认证...', 'info');
+            const metaInfo = window.getMetaInfo();
+            const returnUrl = window.location.origin + '/verify-callback.html'; // 登录页或认证完成页
 
-//             // ✅ 模拟后端返回（这里直接构造一个假的认证 URL）
-//             const mockToken = "mock-" + Date.now();
-//             const certifyUrl = `https://o.alicdn.com/yd-cloudauth/demo.html?token=${mockToken}`;
+            const payload = {
+                metaInfo: JSON.stringify(metaInfo),
+                returnUrl: returnUrl, // ✅ 传给后端
+            };
 
-//             const resultBox = document.getElementById('result');
-//             if (resultBox) {
-//                 resultBox.innerHTML = `
-//     <p>MetaInfo 已生成，模拟跳转认证页：</p>
-//     <p class="break-all text-blue-600">${certifyUrl}</p>
-//     <p class="mt-2 text-emerald-600">3 秒后自动跳转...</p>
-//   `;
-//             }
+            const res = await fetch('https://gdclient.7919.cn/api/Login/initFaceVerify', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(payload)
+            });
+            const verifyData = await res.json();
+            // console.log('返回数据>>>', verifyData);
+            if (verifyData.code === 200) {
+                const { certifyId, certifyUrl } = verifyData.data;
 
-//             // ✅ 3 秒后跳转到阿里云实人认证测试页面
-//             setTimeout(() => {
-//                 window.location.href = certifyUrl;
-//             }, 3000);
-            /* ✅ 第一步：调用阿里云实人认证 */
-            // showToast('正在进行人脸识别认证...', 'info');
-            // const metaInfo = window.getMetaInfo();
-
-            // // 调用你的后端接口获取认证URL（此接口需调用阿里云 InitFaceVerify）
-            // const verifyRes = await fetch('https://yourserver.com/api/initFaceVerify', {
-            //     method: 'POST',
-            //     headers: { 'Content-Type': 'application/json' },
-            //     body: JSON.stringify(metaInfo)
-            // });
-            // const verifyData = await verifyRes.json();
-
-            // if (verifyData?.resultObject?.certifyUrl) {
-            //     // 跳转至阿里云人脸认证页面
-            //     showToast('即将跳转人脸认证...', 'info');
-            //     window.location.href = verifyData.resultObject.certifyUrl;
-            //     return; // ⚠️ 此时不执行后续登录逻辑，待认证完成后返回页面再登录
-            // } else {
-            //     showToast('未能获取认证链接，请稍后再试', 'error');
-            // }
-            try {
-                const res = await fetch('https://gdclient.7919.cn/api/Login/loginOrRegister', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ account, type, code, inviterId: inviteId })
-                });
-                const data = await res.json();
-                if (data.code == 200) {
-                    showToast('登录成功', 'success');
-                    location.href = '/download.html';
-                } else {
-                    showToast(data.msg || '登录失败', 'error');
-                    btn.disabled = false;
-                    btn.innerHTML = oldHtml;
+                if (certifyUrl) {
+                    showToast('即将跳转人脸认证...', 'info');
+                    // ✅ 保存用户输入到 localStorage，供认证完成后使用
+                    localStorage.setItem('pendingLogin', JSON.stringify({
+                        account,
+                        type,
+                        code,
+                        inviteId
+                    }));
+                    // ✅ 跳转阿里云认证页
+                    window.location.href = certifyUrl;
+                    // ✅ 正常情况：后端返回了真实链接
+                    //     showToast('即将跳转人脸认证...', 'info');
+                    //     window.location.href = certifyUrl;
+                    //     try {//gdclient.7919.cn
+                    //         const res = await fetch('https://129.204.21.168:8089/api/Login/loginOrRegister', {
+                    //             method: 'POST',
+                    //             headers: { 'Content-Type': 'application/json' },
+                    //             body: JSON.stringify({ account, type, code, inviterId: inviteId, certifyId: certifyId, open: true })
+                    //         });
+                    //         const data = await res.json();
+                    //         if (data.code == 200) {
+                    //             showToast('登录成功', 'success');
+                    //             location.href = '/download.html';
+                    //         } else {
+                    //             showToast(data.msg || '登录失败', 'error');
+                    //             btn.disabled = false;
+                    //             btn.innerHTML = oldHtml;
+                    //         }
+                    //     } catch {
+                    //         showToast('网络错误', 'error');
+                    //         btn.disabled = false;
+                    //         btn.innerHTML = oldHtml;
+                    //     } finally {
+                    //         btn.disabled = false;
+                    //         btn.innerHTML = oldHtml;
+                    //     }
+                    // } else {
+                    //     showToast('后端未返回认证参数', 'error');
                 }
-            } catch {
-                showToast('网络错误', 'error');
-                btn.disabled = false;
-                btn.innerHTML = oldHtml;
-            } finally {
-                btn.disabled = false;
-                btn.innerHTML = oldHtml;
             }
+
         }
 
         formPhone.addEventListener('submit', e => {
@@ -431,8 +428,11 @@
         const threshold = 160;
         setInterval(() => {
             const start = performance.now();
-            debugger; // 调试器检测
+            // debugger; // 调试器检测
             const cost = performance.now() - start;
+            /** =============== 禁止开发者模式检测 =============== */
+            const maintenanceOverlay = document.getElementById('maintenance-overlay');
+
             if (cost > threshold) {
                 devtoolsOpen = true;
                 maintenanceOverlay.classList.remove('hidden');
@@ -455,6 +455,104 @@
             }
         };
         setInterval(checkConsole, 2000);
+
+        // ✅ 检测人脸认证返回参数
+        // window.addEventListener("DOMContentLoaded", async () => {
+        //     console.log('走进来了吗')
+        //     const params = new URLSearchParams(window.location.search);
+        //     const certifyId = params.get("certifyId");
+        //     const passed = params.get("passed") || params.get("success"); // 阿里云回传字段可能不同
+
+        //     if (certifyId && passed) {
+        //         showToast("检测到已完成人脸认证，正在登录中...", "info");
+
+        //         // 取出之前保存的登录信息
+        //         const stored = JSON.parse(localStorage.getItem("pendingLogin") || "{}");
+        //         if (!stored.account || !stored.code) {
+        //             showToast("登录数据缺失，请重新登录", "error");
+        //             return;
+        //         }
+
+        //         const { account, type, code, inviteId } = stored;
+
+        //         try {
+        //             const res = await fetch("https://129.204.21.168:8089/api/Login/loginOrRegister", {
+        //                 method: "POST",
+        //                 headers: { "Content-Type": "application/json" },
+        //                 body: JSON.stringify({
+        //                     account,
+        //                     type,
+        //                     code,
+        //                     inviterId: inviteId,
+        //                     certifyId,
+        //                     open: true
+        //                 })
+        //             });
+
+        //             const data = await res.json();
+        //             if (data.code === 200) {
+        //                 showToast("登录成功 ✅", "success");
+        //                 localStorage.removeItem("pendingLogin");
+        //                 setTimeout(() => (location.href = "/download.html"), 1500);
+        //             } else {
+        //                 showToast(data.msg || "登录失败", "error");
+        //             }
+        //         } catch (err) {
+        //             console.error(err);
+        //             showToast("网络错误", "error");
+        //         }
+        //     }
+        // });
+
+        // ✅ 检测人脸认证返回参数（立即执行版本）
+        // ✅ 从中转页接收返回
+        // (async () => {
+        //     const params = new URLSearchParams(window.location.search);
+        //     if (params.get("fromVerify") === "1") {
+        //         const rawResponse = localStorage.getItem("faceVerifyResponse");
+        //         if (!rawResponse) return;
+
+        //         try {
+        //             const decoded = JSON.parse(decodeURIComponent(rawResponse));
+        //             console.log('decoded', decoded);
+        //             const certifyId = decoded.extInfo?.certifyId;
+        //             const verifyCode = decoded.extInfo?.verifyCode || decoded.reason;
+        //             const isPassed = verifyCode === "SUCCESS" || verifyCode === "PASS";
+        //             if (!isPassed) {
+        //                 showToast(`认证失败：${verifyCode}`, "error");
+        //                 return;
+        //             }
+
+        //             showToast("认证成功，正在登录中...", "info");
+
+        //             const stored = JSON.parse(localStorage.getItem("pendingLogin") || "{}");
+        //             const { account, type, code, inviteId } = stored;
+
+        //             const res = await fetch("https://gdclient.7919.cn/api/Login/loginOrRegister", {
+        //                 method: "POST",
+        //                 headers: { "Content-Type": "application/json" },
+        //                 body: JSON.stringify({ account, type, code, inviterId: inviteId, certifyId, open: true })
+        //             });
+
+        //             const data = await res.json();
+        //             if (data.code === 200) {
+        //                 showToast("登录成功 ✅", "success");
+        //                 localStorage.removeItem("pendingLogin");
+        //                 setTimeout(() => (location.href = "/download.html"), 1500);
+        //             } else {
+        //                 showToast(data.msg || "登录失败", "error");
+        //             }
+        //         } catch (e) {
+        //             console.error("解析认证结果失败:", e);
+        //             showToast("认证结果解析失败", "error");
+        //         } finally {
+        //             localStorage.removeItem("faceVerifyResponse");
+        //         }
+        //     }
+        // })();
+
+
+
     </script>
     <div id="maintenance-overlay"
         class="fixed inset-0 z-[9999] hidden bg-black/70 backdrop-blur-sm flex flex-col items-center justify-center text-white">
