@@ -235,17 +235,17 @@
             const oldHtml = btn.innerHTML;
             setLoading(btn, '发送中...');
             try {
-                const check = await fetch('https://gdclient.7919.cn/api/Login/checkUserExists', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ account: phone, type: 1 })
-                });
-                const checkData = await check.json();
-                if (checkData.code == 200 && checkData.data.exists) {
-                    showToast('该手机号已注册');
-                    resetButton(btn, oldHtml);
-                    return
-                }
+                // const check = await fetch('https://gdclient.7919.cn/api/Login/checkUserExists', {
+                //     method: 'POST',
+                //     headers: { 'Content-Type': 'application/json' },
+                //     body: JSON.stringify({ account: phone, type: 1 })
+                // });
+                // const checkData = await check.json();
+                // if (checkData.code == 200 && checkData.data.exists) {
+                //     showToast('该手机号已注册');
+                //     resetButton(btn, oldHtml);
+                //     return
+                // }
                 const res = await fetch('https://gdclient.7919.cn/api/Login/sendCode', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
