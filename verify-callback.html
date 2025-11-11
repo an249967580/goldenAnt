@@ -7,6 +7,8 @@
   <title>人脸认证结果 · 金蚂蚁</title>
   <link rel="stylesheet" href="./dist/output.css" />
   <script src="https://unpkg.com/lucide@0.452.0/dist/umd/lucide.min.js"></script>
+  <script src="https://unpkg.com/vconsole/dist/vconsole.min.js"></script>
+    <script>new VConsole();</script>
 
   <style>
     .fade-in {
@@ -136,7 +138,7 @@
         return;
       }
 
-      const isPassed = verifyCode === "SUCCESS" || verifyCode === "PASS";
+      const isPassed = verifyCode === "SUCCESS" || verifyCode === "PASS" || verifyCode === "zim success";
 
       if (!isPassed) {
         setStatus(`认证未通过：${verifyCode}`, "error");

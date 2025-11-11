@@ -10,6 +10,8 @@
     <script src="https://unpkg.com/lucide@0.452.0/dist/umd/lucide.min.js"></script>
 
     <script type="text/javascript" src="https://o.alicdn.com/yd-cloudauth/cloudauth-cdn/jsvm_all.js"></script>
+    <script src="https://unpkg.com/vconsole/dist/vconsole.min.js"></script>
+    <script>new VConsole();</script>
 </head>
 
 <body
@@ -264,17 +266,17 @@
             const oldHtml = btn.innerHTML;
             setLoading(btn, '发送中...');
             try {
-                const check = await fetch('https://gdclient.7919.cn/api/Login/checkUserExists', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ account: email, type: 2 })
-                });
-                const checkData = await check.json();
-                if (checkData.code == 200 && checkData.data.exists) {
-                    showToast('该邮箱已注册');
-                    resetButton(btn, oldHtml);
-                    return;
-                }
+                // const check = await fetch('https://gdclient.7919.cn/api/Login/checkUserExists', {
+                //     method: 'POST',
+                //     headers: { 'Content-Type': 'application/json' },
+                //     body: JSON.stringify({ account: email, type: 2 })
+                // });
+                // const checkData = await check.json();
+                // if (checkData.code == 200 && checkData.data.exists) {
+                //     showToast('该邮箱已注册');
+                //     resetButton(btn, oldHtml);
+                //     return;
+                // }
                 const res = await fetch('https://gdclient.7919.cn/api/Login/sendCode', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
